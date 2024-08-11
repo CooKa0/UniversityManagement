@@ -14,10 +14,11 @@ public class UniversityApp {
 
         Student student = new Student("Alice", LocalDate.of(2024, 9, 1));
         Professor professor = new Professor("Dr. Smith", LocalDate.of(2015, 5, 10));
-        Library library = new Library("Main Library", 5000);
         Classroom classroom = new Classroom("A101", 30);
         Exam exam = new Exam("Final Exam", LocalDate.of(2024, 12, 15));
         Assignment assignment = new Assignment("Project 1", LocalDate.of(2024, 11, 15));
+        Library library1 = new Library("Main Library", 5000);
+        Library library2 = new Library("Science Library", 3000);
 
         // Assignment details
         System.out.println("\nAssignment Details:");
@@ -38,9 +39,34 @@ public class UniversityApp {
         System.out.println("\nClassroom Information:");
         System.out.println(classroom.getClassroomInfo());
 
-        // Library information
-        System.out.println("\nLibrary Information:");
-        System.out.println(library.getLibraryInfo());
+        // Display library information
+        System.out.println(library1.getLibraryInfo());
+        System.out.println(library2.getLibraryInfo());
+
+        // Access and modify library details
+        String lib1Name = library1.getLibraryName();
+        int lib1Books = library1.getBookCount();
+
+        // Print the details
+        System.out.println("\nLibrary 1 Name: " + lib1Name);
+        System.out.println("Library 1 Book Count: " + lib1Books);
+
+        // Update library information
+        library1.setLibraryName("Updated Main Library");
+        library1.setBookCount(6000);
+
+        // Print updated library details
+        System.out.println("\nUpdated Library 1 Information:");
+        System.out.println(library1.getLibraryInfo());
+
+        // Display total number of books across all libraries
+        System.out.println("Total Books in All Libraries: " + Library.getTotalBooks());
+
+        // Further updates to demonstrate all methods
+        library2.setBookCount(8500);
+        System.out.println("\nUpdated Library 2 Information:");
+        System.out.println(library2.getLibraryInfo());
+        System.out.println("Total Books in All Libraries: " + Library.getTotalBooks());
 
         // University information
         System.out.println("\nUniversity Information:");
