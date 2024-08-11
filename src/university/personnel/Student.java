@@ -2,10 +2,13 @@ package university.personnel;
 
 import university.management.Course;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Student {
     private String name;
     private LocalDate enrollmentDate;
+    private Map<Course, Double> courseGrades = new HashMap<>();
 
     public Student(String name, LocalDate enrollmentDate) {
         this.name = name;
@@ -29,7 +32,12 @@ public class Student {
     }
 
     public double calculateGPA() {
-        return 3.5; //placeholder
+        if (courseGrades.isEmpty()) return 0.0;
+        double totalPoints = 0;
+        for (double grade : courseGrades.values()) {
+            totalPoints += grade;
+        }
+        return totalPoints / courseGrades.size();
     }
 
     public String registerForCourse(Course course) {
@@ -38,5 +46,9 @@ public class Student {
 
     public String registerForCourse(String courseName) {
         return "Registered for course: " + courseName;
+    }
+
+    public void addCourseGrade(Course course, double grade) {
+        courseGrades.put(course, grade);
     }
 }

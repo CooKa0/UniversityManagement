@@ -28,18 +28,19 @@ public class Exam {
     }
 
     public void scheduleExam() {
-        // Logic for scheduling exam
-    }
-
-    public String getExamDetails() {
-        return "Exam Name: " + examName;
+        if (examDate == null) {
+            examDate = LocalDate.now().plusDays(30);
+            System.out.println("Exam scheduled for: " + examDate);
+        } else {
+            System.out.println("Exam is already scheduled for: " + examDate);
+        }
     }
 
     public String getExamDetails(boolean includeDate) {
         if (includeDate) {
             return "Exam Name: " + examName + ", Date: " + examDate;
         } else {
-            return getExamDetails();
+            return "Exam Name: " + examName;
         }
     }
 }

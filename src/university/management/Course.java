@@ -25,16 +25,15 @@ public class Course {
         this.credits = credits;
     }
 
-    @Override
-    public String toString() {
-        return courseName + " (" + credits + " credits)";
+    public String getCourseDetails() {
+        return "Course Name: " + courseName + ", Credits: " + credits;
     }
 
     public String toString(boolean detailed) {
         if (detailed) {
             return "Course Name: " + courseName + ", Credits: " + credits;
         } else {
-            return toString();
+            return courseName;
         }
     }
 }

@@ -28,18 +28,18 @@ public class Department {
     }
 
     public String listCourses() {
-        return "Courses: " + courses;
+        StringBuilder courseList = new StringBuilder();
+        for (Course course : courses) {
+            courseList.append(course.toString(false)).append("\n");
+        }
+        return courseList.toString();
     }
 
     public String listCourses(boolean detailed) {
-        if (detailed) {
-            StringBuilder details = new StringBuilder("Detailed Course List:\n");
-            for (Course course : courses) {
-                details.append(course.getCourseName()).append(", Credits: ").append(course.getCredits()).append("\n");
-            }
-            return details.toString();
-        } else {
-            return listCourses();
+        StringBuilder courseList = new StringBuilder();
+        for (Course course : courses) {
+            courseList.append(course.toString(detailed)).append("\n");
         }
+        return courseList.toString();
     }
 }
