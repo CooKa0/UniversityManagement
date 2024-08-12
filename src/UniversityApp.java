@@ -122,14 +122,10 @@ public class UniversityApp {
         }
 
         System.out.println("\nCourses (Basic):");
-        for (Course course : csDepartment.getCourses()) {
-            System.out.println(course.getCourseName());
-        }
+        System.out.println(csDepartment.listCourses());
 
         System.out.println("\nCourses (Detailed):");
-        for (Course course : csDepartment.getCourses()) {
-            System.out.println(course.toString(true));
-        }
+        System.out.println(csDepartment.listCourses(true));
 
         // Display and update university information
         System.out.println("\nUniversity Information:");
