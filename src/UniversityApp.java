@@ -8,7 +8,7 @@ public class UniversityApp {
     public static void main(String[] args) {
 
         // Create university
-        University university = new University("Tech University", LocalDate.of(2000, 1, 1));
+        University university = new University("Tech University", LocalDate.of(2010, 1, 1));
 
         // create department
         Department csDepartment = new Department("Computer Science");
@@ -25,6 +25,8 @@ public class UniversityApp {
 
         // Create a new student and register for courses
         Student student = new Student("Alice", LocalDate.of(2024, 9, 1));
+        System.out.println("Student Details:");
+        System.out.println(student.getStudentDetails());
         String registrationMessage1 = student.registerForCourse(javaCourse);
         String registrationMessage2 = student.registerForCourse(dataStructuresCourse);
 
@@ -33,6 +35,7 @@ public class UniversityApp {
         System.out.println(registrationMessage1);
         System.out.println(registrationMessage2);
 
+
         // Add grades and calculate GPA
         student.addCourseGrade(javaCourse, 3.7);
         student.addCourseGrade(dataStructuresCourse, 3.9);
@@ -40,7 +43,7 @@ public class UniversityApp {
         System.out.println("GPA: " + student.calculateGPA());
 
         // Create professor, classroom, exam, assignment, and libraries
-        Professor professor = new Professor("Dr. Smith", LocalDate.of(2015, 5, 10));
+        Professor professor = new Professor("Dr. Smith", LocalDate.of(2020, 5, 10));
         Classroom classroom = new Classroom("A101", 30);
         Exam exam = new Exam("Final Exam", LocalDate.of(2024, 12, 15));
         Assignment assignment = new Assignment("Project 1", LocalDate.of(2024, 11, 15));
@@ -134,7 +137,7 @@ public class UniversityApp {
         System.out.println(university.getUniversityInfo());
 
         university.setName("Tech University - Updated");
-        university.setEstablishedDate(LocalDate.of(1999, 6, 15));
+        university.setEstablishedDate(LocalDate.of(2020, 6, 15));
 
         System.out.println("\nUpdated University Information:");
         System.out.println("Name: " + university.getName());
@@ -164,7 +167,7 @@ public class UniversityApp {
         System.out.println("Original Hire Date: " + professor.getHireDate());
 
         professor.setName("Dr. John Smith");
-        professor.setHireDate(LocalDate.of(2016, 8, 22));
+        professor.setHireDate(LocalDate.of(2022, 8, 22));
 
         System.out.println("\nUpdated Professor Details:");
         System.out.println(professor.getProfessorDetails(true));
@@ -197,10 +200,10 @@ public class UniversityApp {
         System.out.println("\nUpdated Course Details:");
         System.out.println(javaCourse.getCourseDetails());
 
-//        System.out.println("\nCourse Representation (Detailed):");
-//        System.out.println(javaCourse.toString(true));
-//
-//        System.out.println("\nCourse Representation (Basic):");
-//        System.out.println(javaCourse.toString(false));
+        System.out.println("\nCourse Representation (Detailed):");
+        System.out.println(javaCourse.getCourseDetails(true));
+
+        System.out.println("\nCourse Representation (Basic):");
+        System.out.println(javaCourse.getCourseDetails(false));
     }
 }

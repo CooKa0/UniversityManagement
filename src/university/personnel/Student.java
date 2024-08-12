@@ -39,6 +39,9 @@ public class Student {
         }
         return totalPoints / courseGrades.size();
     }
+    public String getStudentDetails() {
+        return "Student Name: " + name + ", Enrollment Date: " + enrollmentDate;
+    }
 
     public String registerForCourse(Course course) {
         return "Registered for course: " + course.getCourseName();

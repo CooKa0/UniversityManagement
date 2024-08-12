@@ -48,20 +48,4 @@ public class Department {
         }
         return courseList.toString();
     }
-
-//    public String listCourses() {
-//        StringBuilder courseList = new StringBuilder();
-//        for (Course course : courses) {
-//            courseList.append(course.toString(false)).append("\n");
-//        }
-//        return courseList.toString();
-//    }
-//
-//    public String listCourses(boolean detailed) {
-//        StringBuilder courseList = new StringBuilder();
-//        for (Course course : courses) {
-//            courseList.append(course.toString(detailed)).append("\n");
-//        }
-//        return courseList.toString();
-//    }
 }
