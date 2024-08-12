@@ -1,6 +1,8 @@
 package university.personnel;
 
 import university.management.Course;
+import university.assessment.Assignment;
+import university.assessment.Exam;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +11,8 @@ public class Student {
     private String name;
     private LocalDate enrollmentDate;
     private Map<Course, Double> courseGrades = new HashMap<>();
+    private Map<Assignment, Double> assignments = new HashMap<>();
+    private Map<Exam, Double> exams = new HashMap<>();
 
     public Student(String name, LocalDate enrollmentDate) {
         this.name = name;
@@ -44,14 +48,31 @@ public class Student {
     }
 
     public String registerForCourse(Course course) {
+
         return "Registered for course: " + course.getCourseName();
     }
 
-    public String registerForCourse(String courseName) {
+    public String registerForCourse(String courseName)
+    {
         return "Registered for course: " + courseName;
     }
 
     public void addCourseGrade(Course course, double grade) {
         courseGrades.put(course, grade);
+    }
+    public void addAssignment(Assignment assignment, double score) {
+        assignments.put(assignment, score);
+    }
+
+    public void addExam(Exam exam, double score) {
+        exams.put(exam, score);
+    }
+
+    public Map<Assignment, Double> getAssignments() {
+        return assignments;
+    }
+
+    public Map<Exam, Double> getExams() {
+        return exams;
     }
 }

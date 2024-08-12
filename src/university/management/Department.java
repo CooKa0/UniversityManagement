@@ -2,10 +2,12 @@ package university.management;
 
 import java.util.ArrayList;
 import java.util.List;
+import university.personnel.Professor;
 
 public class Department {
     private String departmentName;
     private List<Course> courses = new ArrayList<>();
+    private List<Professor> professors = new ArrayList<>();
 
     public Department(String departmentName) {
         this.departmentName = departmentName;
@@ -25,6 +27,14 @@ public class Department {
 
     public void addCourse(Course course) {
         courses.add(course);
+    }
+
+    public List<Professor> getProfessors() {
+        return professors;
+    }
+
+    public void addProfessor(Professor professor) {
+        professors.add(professor);
     }
 
     public String listCourses() {
