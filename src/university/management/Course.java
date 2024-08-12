@@ -29,11 +29,10 @@ public class Course {
         return "Course Name: " + courseName + ", Credits: " + credits;
     }
 
-    public String toString(boolean detailed) {
-        if (detailed) {
-            return "Course Name: " + courseName + ", Credits: " + credits;
-        } else {
-            return courseName;
-        }
+//    public String toString(boolean detailed) {
+//        if (detailed) {
+//            return "Course Name: " + courseName + ", Credits: " + credits;
+//        } else {
+//            return courseName;
+//        }
     }
-}

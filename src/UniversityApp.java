@@ -197,10 +197,10 @@ public class UniversityApp {
         System.out.println("\nUpdated Course Details:");
         System.out.println(javaCourse.getCourseDetails());
 
-        System.out.println("\nCourse Representation (Detailed):");
-        System.out.println(javaCourse.toString(true));
-
-        System.out.println("\nCourse Representation (Basic):");
-        System.out.println(javaCourse.toString(false));
+//        System.out.println("\nCourse Representation (Detailed):");
+//        System.out.println(javaCourse.toString(true));
+//
+//        System.out.println("\nCourse Representation (Basic):");
+//        System.out.println(javaCourse.toString(false));
     }
 }

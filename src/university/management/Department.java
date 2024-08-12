@@ -30,7 +30,7 @@ public class Department {
     public String listCourses() {
         StringBuilder courseList = new StringBuilder();
         for (Course course : courses) {
-            courseList.append(course.toString(false)).append("\n");
+            courseList.append(course.getCourseName()).append("\n");
         }
         return courseList.toString();
     }
@@ -38,8 +38,30 @@ public class Department {
     public String listCourses(boolean detailed) {
         StringBuilder courseList = new StringBuilder();
         for (Course course : courses) {
-            courseList.append(course.toString(detailed)).append("\n");
+            if (detailed) {
+                courseList.append("Course Name: ").append(course.getCourseName())
+                        .append(", Credits: ").append(course.getCredits())
+                        .append("\n");
+            } else {
+                courseList.append(course.getCourseName()).append("\n");
+            }
         }
         return courseList.toString();
     }
+
+//    public String listCourses() {
+//        StringBuilder courseList = new StringBuilder();
+//        for (Course course : courses) {
+//            courseList.append(course.toString(false)).append("\n");
+//        }
+//        return courseList.toString();
+//    }
+//
+//    public String listCourses(boolean detailed) {
+//        StringBuilder courseList = new StringBuilder();
+//        for (Course course : courses) {
+//            courseList.append(course.toString(detailed)).append("\n");
+//        }
+//        return courseList.toString();
+//    }
 }
