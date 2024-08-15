@@ -221,6 +221,14 @@ public class UniversityApp {
                 System.out.println(course.getCourseName() + " - Credits: " + course.getCredits());
             }
 
+            // Display registered courses
+            System.out.println("\nRegistered Courses:");
+            for (Map.Entry<Course, String> entry : student.getRegisteredCourses().entrySet()) {
+                Course course = entry.getKey();
+                String status = entry.getValue();
+                System.out.println(course.getCourseName() + " - Status: " + status);
+            }
+
 
             // Display and update professor details
             System.out.println("\nProfessor Details:");
