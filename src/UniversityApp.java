@@ -2,11 +2,15 @@ import university.management.*;
 import university.personnel.*;
 import university.facilities.*;
 import university.assessment.*;
+import university.utils.UniversityUtils;
+
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.Scanner;
 
 public class UniversityApp {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
         // Create university
         University university = new University("Tech University", LocalDate.of(2010, 1, 1));
@@ -29,12 +33,11 @@ public class UniversityApp {
         university.addStudent(student);
 
         System.out.println("Student Details:");
-        System.out.println(student.getStudentDetails());
+        UniversityUtils.printMemberDetails(student);
 
         String registrationMessage1 = student.registerForCourse(javaCourse);
         String registrationMessage2 = student.registerForCourse(dataStructuresCourse);
 
-        // Output course registration status
         System.out.println("\nCourse Registration:");
         System.out.println(registrationMessage1);
         System.out.println(registrationMessage2);
@@ -200,7 +203,7 @@ public class UniversityApp {
 
             // Display and update professor details
             System.out.println("\nProfessor Details:");
-            System.out.println(professor.getProfessorDetails(true));
+            UniversityUtils.printMemberDetails(professor);
 
             System.out.println("\nOriginal Professor Name: " + professor.getName());
             System.out.println("Original Hire Date: " + professor.getHireDate());
@@ -217,6 +220,9 @@ public class UniversityApp {
             for (Professor prof : dept.getProfessors()) {
                 System.out.println(prof.getProfessorDetails(true));
             }
+            // Override methods demonstration
+            System.out.println("\nToString Override:");
+            System.out.println(professor.toString());
 
             // Display and update student details and course registration
             System.out.println("\nStudent Details:");
@@ -230,14 +236,11 @@ public class UniversityApp {
             System.out.println("Updated Name: " + student.getName());
             System.out.println("Updated Enrollment Date: " + student.getEnrollmentDate());
 
-            String registrationMessage = student.registerForCourse("Data Structures");
-            System.out.println("\nCourse Registration:");
-            System.out.println(registrationMessage);
-
             System.out.println("\nAll Students:");
             for (Student s : university.getStudents()) {
-                System.out.println(s.getStudentDetails());
+                System.out.println(s.getDetails());
             }
+
 
             // Display and update course details
             System.out.println("\nCourse Details:");

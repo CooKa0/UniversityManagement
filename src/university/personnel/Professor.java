@@ -2,21 +2,23 @@ package university.personnel;
 
 import java.time.LocalDate;
 
-public class Professor {
-    private String name;
+// Professor class extends UniversityMember
+public class Professor extends UniversityMember {
     private LocalDate hireDate;
 
     public Professor(String name, LocalDate hireDate) {
-        this.name = name;
+        super(name, hireDate);
         this.hireDate = hireDate;
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public String getRole() {
+        return "Professor";
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public String getDetails() {
+        return "Professor: " + name + ", Hired on: " + hireDate;
     }
 
     public LocalDate getHireDate() {
@@ -27,15 +29,30 @@ public class Professor {
         this.hireDate = hireDate;
     }
 
-    public String getProfessorDetails() {
-        return "Professor: " + name + ", Hired on: " + hireDate;
-    }
-
     public String getProfessorDetails(boolean includeHireDate) {
         if (includeHireDate) {
-            return getProfessorDetails();
+            return "Professor Name: " + name + ", Hire Date: " + hireDate;
         } else {
-            return "Professor: " + name;
+            return "Professor Name: " + name;
         }
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Hire Date: " + hireDate;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() + hireDate.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) return false;
+
+        Professor professor = (Professor) obj;
+
+        return hireDate.equals(professor.hireDate);
     }
 }

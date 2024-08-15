@@ -7,72 +7,115 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Student {
-    private String name;
-    private LocalDate enrollmentDate;
-    private Map<Course, Double> courseGrades = new HashMap<>();
-    private Map<Assignment, Double> assignments = new HashMap<>();
-    private Map<Exam, Double> exams = new HashMap<>();
+public class Student extends UniversityMember {
+    private Map<Course, Double> courseGrades;  // Not initialized here
+    private Map<Assignment, Double> assignments;  // Not initialized here
+    private Map<Exam, Double> exams;  // Not initialized here
+    private Map<Course, String> registeredCourses;  // Not initialized here
 
     public Student(String name, LocalDate enrollmentDate) {
-        this.name = name;
-        this.enrollmentDate = enrollmentDate;
+        super(name, enrollmentDate);
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public String getRole() {
+        return "Student";
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDate getEnrollmentDate() {
-        return enrollmentDate;
-    }
-
-    public void setEnrollmentDate(LocalDate enrollmentDate) {
-        this.enrollmentDate = enrollmentDate;
-    }
-
-    public double calculateGPA() {
-        if (courseGrades.isEmpty()) return 0.0;
-        double totalPoints = 0;
-        for (double grade : courseGrades.values()) {
-            totalPoints += grade;
-        }
-        return totalPoints / courseGrades.size();
-    }
-    public String getStudentDetails() {
+    @Override
+    public String getDetails() {
         return "Student Name: " + name + ", Enrollment Date: " + enrollmentDate;
     }
 
-    public String registerForCourse(Course course) {
-
-        return "Registered for course: " + course.getCourseName();
+    private Map<Course, Double> getCourseGrades() {
+        if (courseGrades == null) {
+            courseGrades = new HashMap<>();
+        }
+        return courseGrades;
     }
 
-    public String registerForCourse(String courseName)
-    {
-        return "Registered for course: " + courseName;
-    }
-
-    public void addCourseGrade(Course course, double grade) {
-        courseGrades.put(course, grade);
-    }
-    public void addAssignment(Assignment assignment, double score) {
-        assignments.put(assignment, score);
-    }
-
-    public void addExam(Exam exam, double score) {
-        exams.put(exam, score);
-    }
-
-    public Map<Assignment, Double> getAssignments() {
+    private Map<Assignment, Double> getAssignmentsMap() {
+        if (assignments == null) {
+            assignments = new HashMap<>();
+        }
         return assignments;
     }
 
-    public Map<Exam, Double> getExams() {
+    private Map<Exam, Double> getExamsMap() {
+        if (exams == null) {
+            exams = new HashMap<>();
+        }
         return exams;
+    }
+
+    private Map<Course, String> getRegisteredCoursesMap() {
+        if (registeredCourses == null) {
+            registeredCourses = new HashMap<>();
+        }
+        return registeredCourses;
+    }
+
+    public double calculateGPA() {
+        Map<Course, Double> grades = getCourseGrades();
+        if (grades.isEmpty()) return 0.0;
+        double totalPoints = 0;
+        for (double grade : grades.values()) {
+            totalPoints += grade;
+        }
+        return totalPoints / grades.size();
+    }
+
+    public void addCourseGrade(Course course, double grade) {
+        getCourseGrades().put(course, grade);
+    }
+
+    public void addAssignment(Assignment assignment, double score) {
+        getAssignmentsMap().put(assignment, score);
+    }
+
+    public void addExam(Exam exam, double score) {
+        getExamsMap().put(exam, score);
+    }
+
+    public Map<Assignment, Double> getAssignments() {
+        return getAssignmentsMap();
+    }
+
+    public Map<Exam, Double> getExams() {
+        return getExamsMap();
+    }
+
+    public String registerForCourse(Course course) {
+        Map<Course, String> courses = getRegisteredCoursesMap();
+        // Simulate course registration logic
+        if (courses.containsKey(course)) {
+            return "Already registered for " + course.getCourseName();
+        } else {
+            courses.put(course, "Registered");
+            return "Successfully registered for " + course.getCourseName();
+        }
+    }
+
+    public Map<Course, String> getRegisteredCourses() {
+        return getRegisteredCoursesMap();
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", GPA: " + calculateGPA();
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() + (int) (calculateGPA() * 100);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) return false;
+
+        Student student = (Student) obj;
+
+        return calculateGPA() == student.calculateGPA();
     }
 }

@@ -58,4 +58,14 @@ public class Department {
         }
         return courseList.toString();
     }
+
+    // Method to find a course by its name
+    public Course findCourseByName(String courseName) {
+        for (Course course : courses) {
+            if (course.getCourseName().equalsIgnoreCase(courseName)) {
+                return course;
+            }
+        }
+        return null; // Return null or throw an exception if the course is not found
+    }
 }
