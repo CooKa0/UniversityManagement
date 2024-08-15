@@ -2,7 +2,7 @@ package university.personnel;
 
 import java.time.LocalDate;
 
-// Professor class extends UniversityMember
+
 public class Professor extends UniversityMember {
 
     public Professor(String name, LocalDate hireDate) {

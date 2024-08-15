@@ -21,11 +21,6 @@ public class University {
     public University(String name, LocalDate establishedDate) {
         this.name = name;
         this.establishedDate = establishedDate;
-        this.departments = new ArrayList<>();
-        this.students = new ArrayList<>();
-        this.libraries = new ArrayList<>();
-        this.classrooms = new ArrayList<>();
-        this.workers = new ArrayList<>();
         universityCount++;
     }
 
@@ -46,45 +41,74 @@ public class University {
     }
 
     public List<Department> getDepartments() {
+        if (departments == null) {
+            departments = new ArrayList<>();
+        }
         return departments;
     }
 
     public void addDepartment(Department department) {
+        if (departments == null) {
+            departments = new ArrayList<>();
+        }
         departments.add(department);
     }
 
     public List<Student> getStudents() {
+        if (students == null) {
+            students = new ArrayList<>();
+        }
         return students;
     }
 
     public void addStudent(Student student) {
+        if (students == null) {
+            students = new ArrayList<>();
+        }
         students.add(student);
     }
 
     public List<Library> getLibraries() {
+        if (libraries == null) {
+            libraries = new ArrayList<>();
+        }
         return libraries;
     }
 
     public void addLibrary(Library library) {
+        if (libraries == null) {
+            libraries = new ArrayList<>();
+        }
         libraries.add(library);
     }
 
     public List<Classroom> getClassrooms() {
+        if (classrooms == null) {
+            classrooms = new ArrayList<>();
+        }
         return classrooms;
     }
 
     public void addClassroom(Classroom classroom) {
+        if (classrooms == null) {
+            classrooms = new ArrayList<>();
+        }
         classrooms.add(classroom);
     }
 
     public List<Worker> getWorkers() {
+        if (workers == null) {
+            workers = new ArrayList<>();
+        }
         return workers;
     }
 
     public void addWorker(Worker worker) {
+        if (workers == null) {
+            workers = new ArrayList<>();
+        }
         workers.add(worker);
     }
-
 
     public String getUniversityInfo() {
         return "University Name: " + name + ", Established: " + establishedDate;
