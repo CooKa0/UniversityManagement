@@ -73,6 +73,7 @@ public class UniversityApp {
         Professor professor = new Professor("Dr. Smith", LocalDate.of(2020, 5, 10));
         csDepartment.addProfessor(professor);
 
+
         Classroom classroom = new Classroom("A101", 30);
         Library library1 = new Library("Main Library", 5000);
         Library library2 = new Library("Science Library", 3000);
@@ -102,6 +103,16 @@ public class UniversityApp {
             Double score = entry.getValue();
             System.out.println(e.getExamDetails(true) + " - Score: " + score);
         }
+
+        // Create workers
+        Worker janitor = new Worker("John Doe", LocalDate.of(2020, 6, 1), "Maintenance");
+        Worker librarian = new Worker("Jane Smith", LocalDate.of(2018, 3, 15), "Library Services");
+        Worker securityGuard = new Worker("Alex Johnson", LocalDate.of(2021, 11, 1), "Security");
+
+        // Add workers to the university
+        university.addWorker(janitor);
+        university.addWorker(librarian);
+        university.addWorker(securityGuard);
 
         // Display and update assignment details
         System.out.println("\nAssignment Details:");
@@ -279,6 +290,25 @@ public class UniversityApp {
 
             System.out.println("\nCourse Representation (Basic):");
             System.out.println(javaCourse.getCourseName());
+
+            // Print details of each worker
+            System.out.println("\nWorker Details:");
+            for (Worker worker : university.getWorkers()) {
+                System.out.println(worker.getDetails());
+            }
+
+            // Update and display worker details
+            System.out.println("\nUpdating Worker Details:");
+            janitor.setName("Johnathan Doe");
+            janitor.setHireDate(LocalDate.of(2019, 12, 15));
+            janitor.setDepartment("Facilities");
+
+            System.out.println(janitor.getDetails());
+
+            // Demonstrate overridden toString method
+            System.out.println("\nToString Override:");
+            System.out.println(janitor.toString());
+            
         }
     }
 }
