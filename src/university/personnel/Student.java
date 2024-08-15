@@ -8,10 +8,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Student extends UniversityMember {
-    private Map<Course, Double> courseGrades;  // Not initialized here
-    private Map<Assignment, Double> assignments;  // Not initialized here
-    private Map<Exam, Double> exams;  // Not initialized here
-    private Map<Course, String> registeredCourses;  // Not initialized here
+    private Map<Course, Double> courseGrades;
+    private Map<Assignment, Double> assignments;
+    private Map<Exam, Double> exams;
+    private Map<Course, String> registeredCourses;
 
     public Student(String name, LocalDate enrollmentDate) {
         super(name, enrollmentDate);
@@ -87,7 +87,7 @@ public class Student extends UniversityMember {
 
     public String registerForCourse(Course course) {
         Map<Course, String> courses = getRegisteredCoursesMap();
-        // Simulate course registration logic
+
         if (courses.containsKey(course)) {
             return "Already registered for " + course.getCourseName();
         } else {

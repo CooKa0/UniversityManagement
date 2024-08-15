@@ -237,7 +237,7 @@ public class UniversityApp {
             System.out.println("Updated Professor Name: " + professor.getName());
             System.out.println("Updated Hire Date: " + professor.getHireDate());
 
-                        System.out.println("Professors:");
+            System.out.println("Professors:");
             for (Professor prof : dept.getProfessors()) {
                 System.out.println(prof.getProfessorDetails(true));
             }

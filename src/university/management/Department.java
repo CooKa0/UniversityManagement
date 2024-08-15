@@ -66,6 +66,6 @@ public class Department {
                 return course;
             }
         }
-        return null; // Return null or throw an exception if the course is not found
+        return null;
     }
 }
