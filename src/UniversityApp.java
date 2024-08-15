@@ -52,17 +52,6 @@ public class UniversityApp {
         }
 
 
-
-//        System.out.println("Student Details:");
-//        UniversityUtils.printMemberDetails(student);
-//
-//        String registrationMessage1 = student.registerForCourse(javaCourse);
-//        String registrationMessage2 = student.registerForCourse(dataStructuresCourse);
-//
-//        System.out.println("\nCourse Registration:");
-//        System.out.println(registrationMessage1);
-//        System.out.println(registrationMessage2);
-
         // Add grades and calculate GPA
         student.addCourseGrade(javaCourse, 3.7);
         student.addCourseGrade(dataStructuresCourse, 3.9);
@@ -254,7 +243,7 @@ public class UniversityApp {
             }
             // Override methods demonstration
             System.out.println("\nToString Override:");
-            System.out.println(professor.toString());
+            System.out.println(professor);
 
             // Display and update student details and course registration
             System.out.println("\nStudent Details:");
@@ -303,12 +292,14 @@ public class UniversityApp {
             janitor.setHireDate(LocalDate.of(2019, 12, 15));
             janitor.setDepartment("Facilities");
 
+            System.out.println("Updated Department: " + janitor.getDepartment());
             System.out.println(janitor.getDetails());
+
 
             // Demonstrate overridden toString method
             System.out.println("\nToString Override:");
-            System.out.println(janitor.toString());
-            
+            System.out.println(janitor);
+
         }
     }
 }
