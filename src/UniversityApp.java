@@ -32,15 +32,36 @@ public class UniversityApp {
         Student student = new Student("Alice", LocalDate.of(2024, 9, 1));
         university.addStudent(student);
 
-        System.out.println("Student Details:");
-        UniversityUtils.printMemberDetails(student);
+        Course javaCourseToRegister = csDepartment.findCourseByName("Java Programming");
+        Course dataStructuresCourseToRegister = csDepartment.findCourseByName("Data Structures");
 
-        String registrationMessage1 = student.registerForCourse(javaCourse);
-        String registrationMessage2 = student.registerForCourse(dataStructuresCourse);
+        // Register student for courses if found
+        if (javaCourseToRegister != null) {
+            String registrationMessage1 = student.registerForCourse(javaCourseToRegister);
+            System.out.println("\nCourse Registration:");
+            System.out.println(registrationMessage1);
+        } else {
+            System.out.println("Course 'Java Programming' not found!");
+        }
 
-        System.out.println("\nCourse Registration:");
-        System.out.println(registrationMessage1);
-        System.out.println(registrationMessage2);
+        if (dataStructuresCourseToRegister != null) {
+            String registrationMessage2 = student.registerForCourse(dataStructuresCourseToRegister);
+            System.out.println(registrationMessage2);
+        } else {
+            System.out.println("Course 'Data Structures' not found!");
+        }
+
+
+
+//        System.out.println("Student Details:");
+//        UniversityUtils.printMemberDetails(student);
+//
+//        String registrationMessage1 = student.registerForCourse(javaCourse);
+//        String registrationMessage2 = student.registerForCourse(dataStructuresCourse);
+//
+//        System.out.println("\nCourse Registration:");
+//        System.out.println(registrationMessage1);
+//        System.out.println(registrationMessage2);
 
         // Add grades and calculate GPA
         student.addCourseGrade(javaCourse, 3.7);
