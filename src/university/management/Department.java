@@ -6,8 +6,8 @@ import university.personnel.Professor;
 
 public class Department {
     private String departmentName;
-    private List<Course> courses = new ArrayList<>();
-    private List<Professor> professors = new ArrayList<>();
+    private List<Course> courses;
+    private List<Professor> professors;
 
     public Department(String departmentName) {
         this.departmentName = departmentName;
@@ -22,18 +22,30 @@ public class Department {
     }
 
     public List<Course> getCourses() {
+        if (courses == null) {
+            courses = new ArrayList<>();
+        }
         return courses;
     }
 
     public void addCourse(Course course) {
+        if (courses == null) {
+            courses = new ArrayList<>();
+        }
         courses.add(course);
     }
 
     public List<Professor> getProfessors() {
+        if (professors == null) {
+            professors = new ArrayList<>();
+        }
         return professors;
     }
 
     public void addProfessor(Professor professor) {
+        if (professors == null) {
+            professors = new ArrayList<>();
+        }
         professors.add(professor);
     }
 

@@ -51,6 +51,14 @@ public class UniversityApp {
             System.out.println("Course 'Data Structures' not found!");
         }
 
+        // Display registered courses
+        System.out.println("\nRegistered Courses:");
+        for (Map.Entry<Course, String> entry : student.getRegisteredCourses().entrySet()) {
+            Course course = entry.getKey();
+            String status = entry.getValue();
+            System.out.println(course.getCourseName() + " - Status: " + status);
+        }
+
 
         // Add grades and calculate GPA
         student.addCourseGrade(javaCourse, 3.7);
@@ -221,15 +229,6 @@ public class UniversityApp {
                 System.out.println(course.getCourseName() + " - Credits: " + course.getCredits());
             }
 
-            // Display registered courses
-            System.out.println("\nRegistered Courses:");
-            for (Map.Entry<Course, String> entry : student.getRegisteredCourses().entrySet()) {
-                Course course = entry.getKey();
-                String status = entry.getValue();
-                System.out.println(course.getCourseName() + " - Status: " + status);
-            }
-
-
             // Display and update professor details
             System.out.println("\nProfessor Details:");
             UniversityUtils.printMemberDetails(professor);
@@ -273,20 +272,20 @@ public class UniversityApp {
 
             // Display and update course details
             System.out.println("\nCourse Details:");
-            System.out.println(javaCourse.getCourseName() + " - Credits: " + javaCourse.getCredits());
+            System.out.println(javaCourse.getCourseDetails());
 
             javaCourse.setCourseName("Advanced Java Programming");
             javaCourse.setCredits(5);
 
             System.out.println("\nUpdated Course Details:");
-            System.out.println(javaCourse.getCourseName() + " - Credits: " + javaCourse.getCredits());
+            System.out.println(javaCourse.getCourseDetails());
 
             // Display detailed and basic course representation
             System.out.println("\nCourse Representation (Detailed):");
-            System.out.println("Course Name: " + javaCourse.getCourseName() + ", Credits: " + javaCourse.getCredits());
+            System.out.println(javaCourse.getCourseDetails(true));
 
             System.out.println("\nCourse Representation (Basic):");
-            System.out.println(javaCourse.getCourseName());
+            System.out.println(javaCourse.getCourseDetails(false));
 
             // Print details of each worker
             System.out.println("\nWorker Details:");
