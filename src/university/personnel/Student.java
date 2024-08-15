@@ -8,13 +8,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Student extends UniversityMember {
+    private LocalDate enrollmentDate;
     private Map<Course, Double> courseGrades;
     private Map<Assignment, Double> assignments;
     private Map<Exam, Double> exams;
     private Map<Course, String> registeredCourses;
 
     public Student(String name, LocalDate enrollmentDate) {
-        super(name, enrollmentDate);
+        super(name);
+        this.enrollmentDate = enrollmentDate;
+    }
+
+    public LocalDate getEnrollmentDate() {
+        return enrollmentDate;
+    }
+
+    public void setEnrollmentDate(LocalDate enrollmentDate) {
+        this.enrollmentDate = enrollmentDate;
     }
 
     @Override

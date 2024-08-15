@@ -4,11 +4,16 @@ import java.time.LocalDate;
 
 public abstract class UniversityMember {
     protected String name;
-    protected LocalDate enrollmentDate;
+    protected LocalDate hireDate;
 
-    public UniversityMember(String name, LocalDate enrollmentDate) {
+    public UniversityMember(String name, LocalDate hireDate) {
         this.name = name;
-        this.enrollmentDate = enrollmentDate;
+        this.hireDate = hireDate;
+    }
+
+    public UniversityMember(String name) {
+        this.name = name;
+        this.hireDate = null;
     }
 
     public String getName() {
@@ -19,12 +24,12 @@ public abstract class UniversityMember {
         this.name = name;
     }
 
-    public LocalDate getEnrollmentDate() {
-        return enrollmentDate;
+    public LocalDate getHireDate() {
+        return hireDate;
     }
 
-    public void setEnrollmentDate(LocalDate enrollmentDate) {
-        this.enrollmentDate = enrollmentDate;
+    public void setHireDate(LocalDate hireDate) {
+        this.hireDate = hireDate;
     }
 
     public abstract String getRole();
@@ -33,12 +38,12 @@ public abstract class UniversityMember {
 
     @Override
     public String toString() {
-        return "Name: " + name + ", Role: " + getRole();
+        return "Name: " + name + ", Role: " + getRole() + ", Hire Date: " + hireDate;
     }
 
     @Override
     public int hashCode() {
-        return name.hashCode() + enrollmentDate.hashCode();
+        return name.hashCode() + hireDate.hashCode();
     }
 
     @Override
@@ -48,6 +53,6 @@ public abstract class UniversityMember {
 
         UniversityMember that = (UniversityMember) obj;
 
-        return name.equals(that.name) && enrollmentDate.equals(that.enrollmentDate);
+        return name.equals(that.name) && hireDate.equals(that.hireDate);
     }
 }
