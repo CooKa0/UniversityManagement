@@ -7,6 +7,7 @@ import university.personnel.UniversityMember;
 
 public class UniversityUtils {
 
+    //can use switch statement too
     public static void printMemberDetails(UniversityMember member) {
         System.out.println("Member Details:");
         if (member instanceof Student) {
