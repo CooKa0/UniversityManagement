@@ -71,7 +71,6 @@ public class Department {
         return courseList.toString();
     }
 
-    // Method to find a course by its name
     public Course findCourseByName(String courseName) {
         for (Course course : courses) {
             if (course.getCourseName().equalsIgnoreCase(courseName)) {
@@ -79,5 +78,21 @@ public class Department {
             }
         }
         return null;
+    }
+
+    @Override
+    public int hashCode() {
+        return departmentName.hashCode() + (courses != null ? courses.hashCode() : 0) + (professors != null ? professors.hashCode() : 0);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Department that = (Department) obj;
+        return departmentName.equals(that.departmentName) &&
+                (courses != null ? courses.equals(that.courses) : that.courses == null) &&
+                (professors != null ? professors.equals(that.professors) : that.professors == null);
     }
 }

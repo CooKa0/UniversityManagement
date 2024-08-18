@@ -43,4 +43,26 @@ public class Exam {
             return "Exam Name: " + examName;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Exam{" +
+                "examName='" + examName + '\'' +
+                ", examDate=" + examDate +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return examName.hashCode() + examDate.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Exam that = (Exam) obj;
+        return examName.equals(that.examName) && examDate.equals(that.examDate);
+    }
 }

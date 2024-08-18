@@ -36,4 +36,26 @@ public class Course {
             return "Course Name: " + courseName;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "courseName='" + courseName + '\'' +
+                ", credits=" + credits +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return courseName.hashCode() + credits;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Course that = (Course) obj;
+        return credits == that.credits && courseName.equals(that.courseName);
+    }
 }

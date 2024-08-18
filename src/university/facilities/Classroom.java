@@ -28,4 +28,26 @@ public class Classroom {
     public String getClassroomInfo() {
         return "Room Number: " + roomNumber + ", Capacity: " + capacity;
     }
+
+    @Override
+    public String toString() {
+        return "Classroom{" +
+                "roomNumber='" + roomNumber + '\'' +
+                ", capacity=" + capacity +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return roomNumber.hashCode() + capacity;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Classroom that = (Classroom) obj;
+        return capacity == that.capacity && roomNumber.equals(that.roomNumber);
+    }
 }

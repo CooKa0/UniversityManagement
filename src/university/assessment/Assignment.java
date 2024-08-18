@@ -30,4 +30,26 @@ public class Assignment {
     public String getAssignmentDetails() {
         return "Assignment Title: " + assignmentTitle + ", Due Date: " + dueDate;
     }
+
+    @Override
+    public String toString() {
+        return "Assignment{" +
+                "assignmentTitle='" + assignmentTitle + '\'' +
+                ", dueDate=" + dueDate +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return assignmentTitle.hashCode() + dueDate.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Assignment that = (Assignment) obj;
+        return assignmentTitle.equals(that.assignmentTitle) && dueDate.equals(that.dueDate);
+    }
 }

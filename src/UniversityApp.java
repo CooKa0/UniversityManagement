@@ -12,8 +12,28 @@ public class UniversityApp {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Create university
-        University university = new University("Tech University", LocalDate.of(2010, 1, 1));
+        // Prompt the user to enter the university name
+        System.out.print("Enter the name of the university: ");
+        String universityName = scanner.nextLine();
+
+        // Prompt the user to enter the founding date of the university
+        System.out.println("Enter the founding date of the university:");
+        System.out.print("Year: ");
+        int year = scanner.nextInt();
+        System.out.print("Month: ");
+        int month = scanner.nextInt();
+        System.out.print("Day: ");
+        int day = scanner.nextInt();
+
+        // Create the university with the provided data
+        University university = new University(universityName, LocalDate.of(year, month, day));
+
+        System.out.println("University created successfully!");
+        System.out.println("University Name: " + university.getName());
+        System.out.println("Established Date: " + university.getEstablishedDate());
+
+//        // Create university
+//        University university = new University("Tech University", LocalDate.of(2010, 1, 1));
 
         // Create department
         Department csDepartment = new Department("Computer Science");
