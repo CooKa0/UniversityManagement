@@ -68,11 +68,25 @@ public class Student extends UniversityMember {
     public double calculateGPA() {
         List<CourseGrade> grades = getCourseGrades();
         if (grades.isEmpty()) return 0.0;
+
         double totalPoints = 0;
+        int totalCredits = 0;
+
         for (CourseGrade courseGrade : grades) {
-            totalPoints += courseGrade.getGrade();
+            Course course = courseGrade.getCourse();
+            int credits = course.getCredits();
+            String status = "Completed";
+
+            if ("Completed".equalsIgnoreCase(status)) {
+                double grade = courseGrade.getGrade();
+                double normalizedGrade = grade;
+
+                totalPoints += normalizedGrade * credits;
+                totalCredits += credits;
+            }
         }
-        return totalPoints / grades.size();
+
+        return totalCredits == 0 ? 0.0 : totalPoints / totalCredits;
     }
 
     public void addCourseGrade(Course course, double grade) {
