@@ -5,7 +5,6 @@ import university.assessment.*;
 import university.utils.UniversityUtils;
 
 import java.time.LocalDate;
-import java.util.Map;
 import java.util.Scanner;
 
 public class UniversityApp {
@@ -73,12 +72,10 @@ public class UniversityApp {
 
         // Display registered courses
         System.out.println("\nRegistered Courses:");
-        for (Map.Entry<Course, String> entry : student.getRegisteredCourses().entrySet()) {
-            Course course = entry.getKey();
-            String status = entry.getValue();
-            System.out.println(course.getCourseName() + " - Status: " + status);
+        for (Student.RegisteredCourse entry : student.getRegisteredCoursesList()) {
+            Course course = entry.getCourse();
+            System.out.println(course.getCourseName() + " - Status: Registered");
         }
-
 
         // Add grades and calculate GPA
         student.addCourseGrade(javaCourse, 3.7);
@@ -108,16 +105,16 @@ public class UniversityApp {
 
         // Print assignment and exam details
         System.out.println("\nAssignments:");
-        for (Map.Entry<Assignment, Double> entry : student.getAssignments().entrySet()) {
-            Assignment a = entry.getKey();
-            Double score = entry.getValue();
+        for (Student.AssignmentScore entry : student.getAssignmentsList()) {
+            Assignment a = entry.getAssignment();
+            Double score = entry.getScore();
             System.out.println(a.getAssignmentDetails() + " - Score: " + score);
         }
 
         System.out.println("\nExams:");
-        for (Map.Entry<Exam, Double> entry : student.getExams().entrySet()) {
-            Exam e = entry.getKey();
-            Double score = entry.getValue();
+        for (Student.ExamScore entry : student.getExamsList()) {
+            Exam e = entry.getExam();
+            Double score = entry.getScore();
             System.out.println(e.getExamDetails(true) + " - Score: " + score);
         }
 
