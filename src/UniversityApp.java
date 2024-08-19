@@ -327,6 +327,12 @@ public class UniversityApp {
             System.out.println("\nToString Override:");
             System.out.println(janitor);
 
+            System.out.println("\nComparing a Student and a Professor:");
+            UniversityUtils.compareMembers(student, professor);
+
+            System.out.println("\nComparing Two Workers:");
+            UniversityUtils.compareMembers(janitor, librarian);
+
         }
     }
 }
