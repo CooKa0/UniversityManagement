@@ -1,8 +1,10 @@
 package university.assessment;
 
+import university.management.Department;
+
 import java.time.LocalDate;
 
-public class Exam {
+public class Exam implements Department.Schedulable {
     private String examName;
     private LocalDate examDate;
 
@@ -64,5 +66,15 @@ public class Exam {
 
         Exam that = (Exam) obj;
         return examName.equals(that.examName) && examDate.equals(that.examDate);
+    }
+
+    @Override
+    public void scheduleEvent() {
+        System.out.println("Scheduling exam for subject: " + examName + " on date: " + examDate);
+    }
+
+    @Override
+    public void rescheduleEvent() {
+        System.out.println("Rescheduling exam for subject: " + examName);
     }
 }

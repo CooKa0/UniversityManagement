@@ -4,9 +4,16 @@ public class Course {
     private String courseName;
     private int credits;
 
+    public static final int MAX_COURSE_CREDITS = 5;
+
     public Course(String courseName, int credits) {
         this.courseName = courseName;
-        this.credits = credits;
+//        this.credits = credits;
+        if (credits <= MAX_COURSE_CREDITS) {
+            this.credits = credits;
+        } else {
+            throw new IllegalArgumentException("Course credits cannot exceed " + MAX_COURSE_CREDITS);
+        }
     }
 
     public String getCourseName() {

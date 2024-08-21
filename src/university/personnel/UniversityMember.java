@@ -36,6 +36,12 @@ public abstract class UniversityMember {
 
     public abstract String getDetails();
 
+    public interface Evaluable {
+        void evaluatePerformance();
+        String getEvaluationDetails();
+    }
+
+
     @Override
     public String toString() {
         return "Name: " + name + ", Role: " + getRole() + ", Hire Date: " + hireDate;

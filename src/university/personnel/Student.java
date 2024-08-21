@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student extends UniversityMember {
+public class Student extends UniversityMember implements UniversityMember.Evaluable {
     private LocalDate enrollmentDate;
     private List<CourseGrade> courseGrades;
     private List<AssignmentScore> assignments;
@@ -202,6 +202,16 @@ public class Student extends UniversityMember {
     }
 
     @Override
+    public void evaluatePerformance() {
+        System.out.println("Evaluating student performance...");
+    }
+
+    @Override
+    public String getEvaluationDetails() {
+        return "Student Performance Details";
+    }
+
+    @Override
     public String toString() {
         return super.toString() + ", GPA: " + calculateGPA();
     }
@@ -219,4 +229,6 @@ public class Student extends UniversityMember {
 
         return calculateGPA() == student.calculateGPA();
     }
+
+
 }

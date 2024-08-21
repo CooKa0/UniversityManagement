@@ -95,4 +95,9 @@ public class Department {
                 (courses != null ? courses.equals(that.courses) : that.courses == null) &&
                 (professors != null ? professors.equals(that.professors) : that.professors == null);
     }
+
+    public interface Schedulable {
+        void scheduleEvent();
+        void rescheduleEvent();
+    }
 }
