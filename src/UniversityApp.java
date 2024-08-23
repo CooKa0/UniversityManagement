@@ -53,6 +53,8 @@ public class UniversityApp {
 
         Course javaCourseToRegister = csDepartment.findCourseByName("Java Programming");
         Course dataStructuresCourseToRegister = csDepartment.findCourseByName("Data Structures");
+        student.evaluate();
+        student.trackProgress();
 
         // Register student for courses if found
         if (javaCourseToRegister != null) {

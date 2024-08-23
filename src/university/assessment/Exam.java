@@ -1,12 +1,18 @@
 package university.assessment;
 
-import university.management.Department;
+
+
+import university.interfaces.Evaluatable;
+import university.interfaces.Identifiable;
+import university.interfaces.Trackable;
 
 import java.time.LocalDate;
 
-public class Exam implements Department.Schedulable {
+public class Exam implements Evaluatable, Trackable, Identifiable {
     private String examName;
     private LocalDate examDate;
+    private String id;
+    private String progressReport;
 
     public Exam(String examName, LocalDate examDate) {
         this.examName = examName;
@@ -55,6 +61,40 @@ public class Exam implements Department.Schedulable {
     }
 
     @Override
+    public void evaluate() {
+        System.out.println("Evaluating exam...");
+    }
+
+    @Override
+    public String getEvaluationCriteria() {
+        return "Exam Evaluation Criteria";
+    }
+
+    @Override
+    public void trackProgress() {
+        System.out.println("Tracking exam progress...");
+    }
+
+    @Override
+    public String getProgressReport() {
+        return progressReport;
+    }
+
+    public void setProgressReport(String progressReport) {
+        this.progressReport = progressReport;
+    }
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
     public int hashCode() {
         return examName.hashCode() + examDate.hashCode();
     }
@@ -66,15 +106,5 @@ public class Exam implements Department.Schedulable {
 
         Exam that = (Exam) obj;
         return examName.equals(that.examName) && examDate.equals(that.examDate);
-    }
-
-    @Override
-    public void scheduleEvent() {
-        System.out.println("Scheduling exam for subject: " + examName + " on date: " + examDate);
-    }
-
-    @Override
-    public void rescheduleEvent() {
-        System.out.println("Rescheduling exam for subject: " + examName);
     }
 }

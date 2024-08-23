@@ -5,6 +5,10 @@ public final class UniversityConstants {
     public static final int MAX_PROFESSORS_PER_DEPARTMENT = 10;
 
     private UniversityConstants() {
-        // Private constructor to prevent instantiation
+    }
+
+    public static void printConstants() {
+        System.out.println("Max Students per Class: " + MAX_STUDENTS_PER_CLASS);
+        System.out.println("Max Professors per Department: " + MAX_PROFESSORS_PER_DEPARTMENT);
     }
 }

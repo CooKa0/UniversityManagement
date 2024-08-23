@@ -2,7 +2,7 @@ package university.personnel;
 
 import java.time.LocalDate;
 
-public class Worker extends UniversityMember {
+public class Worker extends UniversityMember  {
     private String department;
 
     public Worker(String name, LocalDate hireDate, String department) {
@@ -27,6 +27,7 @@ public class Worker extends UniversityMember {
     public String getDepartment() {
         return department;
     }
+
 
     @Override
     public String toString() {

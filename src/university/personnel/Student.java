@@ -1,5 +1,8 @@
 package university.personnel;
 
+import university.interfaces.Evaluatable;
+import university.interfaces.Identifiable;
+import university.interfaces.Trackable;
 import university.management.Course;
 import university.assessment.Assignment;
 import university.assessment.Exam;
@@ -7,12 +10,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student extends UniversityMember implements UniversityMember.Evaluable {
+public class Student extends UniversityMember implements Evaluatable, Trackable, Identifiable {
     private LocalDate enrollmentDate;
     private List<CourseGrade> courseGrades;
     private List<AssignmentScore> assignments;
     private List<ExamScore> exams;
     private List<RegisteredCourse> registeredCourses;
+    private String id;
 
     public Student(String name, LocalDate enrollmentDate) {
         super(name);
@@ -202,13 +206,34 @@ public class Student extends UniversityMember implements UniversityMember.Evalua
     }
 
     @Override
-    public void evaluatePerformance() {
+    public void evaluate() {
         System.out.println("Evaluating student performance...");
     }
 
     @Override
-    public String getEvaluationDetails() {
-        return "Student Performance Details";
+    public String getEvaluationCriteria() {
+        return "Student Evaluation Criteria";
+    }
+
+    @Override
+    public void trackProgress() {
+        System.out.println("Tracking student progress...");
+    }
+
+    @Override
+    public String getProgressReport() {
+        return "Student Progress Report";
+    }
+
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
