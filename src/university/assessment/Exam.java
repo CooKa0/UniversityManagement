@@ -70,22 +70,45 @@ public class Exam implements Evaluatable, Trackable, Identifiable {
 
     @Override
     public void evaluate() {
-        System.out.println("Evaluating exam...");
+        if (score >= 90) {
+            System.out.println("Grade: A");
+        } else if (score >= 80) {
+            System.out.println("Grade: B");
+        } else if (score >= 70) {
+            System.out.println("Grade: C");
+        } else if (score >= 60) {
+            System.out.println("Grade: D");
+        } else {
+            System.out.println("Grade: F");
+        }
     }
 
     @Override
     public String getEvaluationCriteria() {
-        return "Exam Evaluation Criteria";
+        return "Evaluation criteria:\n" +
+                "90-100: A\n" +
+                "80-89: B\n" +
+                "70-79: C\n" +
+                "60-69: D\n" +
+                "Below 60: F";
     }
 
     @Override
     public void trackProgress() {
-        System.out.println("Tracking exam progress...");
+        if (examDate != null && LocalDate.now().isAfter(examDate)) {
+            progressReport = "Exam has been conducted.";
+        } else if (examDate != null && LocalDate.now().isBefore(examDate)) {
+            long daysLeft = LocalDate.now().until(examDate).getDays();
+            progressReport = "Exam scheduled in " + daysLeft + " days.";
+        } else {
+            progressReport = "Exam date is not set.";
+        }
+        System.out.println("Progress report: " + progressReport);
     }
 
     @Override
     public String getProgressReport() {
-        return progressReport;
+        return progressReport != null ? progressReport : "Progress report is not available.";
     }
 
     public void setProgressReport(String progressReport) {
