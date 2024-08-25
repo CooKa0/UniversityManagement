@@ -18,6 +18,10 @@ public class University {
     private List<Worker> workers;
     private static int universityCount = 0;
 
+    static {
+        System.out.println("University class loaded. Initializing static variables...");
+    }
+
     public University(String name, LocalDate establishedDate) {
         this.name = name;
         this.establishedDate = establishedDate;

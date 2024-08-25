@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import university.personnel.Professor;
 
+
 public class Department {
     private String departmentName;
     private List<Course> courses;
@@ -30,10 +31,7 @@ public class Department {
     }
 
     public void addCourse(Course course) {
-        if (courses == null) {
-            courses = new ArrayList<>();
-        }
-        courses.add(course);
+        getCourses().add(course);
     }
 
     public List<Professor> getProfessors() {
@@ -44,10 +42,10 @@ public class Department {
     }
 
     public void addProfessor(Professor professor) {
-        if (professors == null) {
-            professors = new ArrayList<>();
+        if (getProfessors().size() >= UniversityConstants.MAX_PROFESSORS_PER_DEPARTMENT) {
+            throw new IllegalStateException("Cannot add more professors. Maximum limit reached.");
         }
-        professors.add(professor);
+        getProfessors().add(professor);
     }
 
     public List<Events> getEvents() {

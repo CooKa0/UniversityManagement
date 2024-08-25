@@ -4,10 +4,14 @@ public class Library {
     private String libraryName;
     private int bookCount;
 
+    private static final int MAX_BOOKS = 10000;
     private static int totalBooks = 0;
 
     public Library(String libraryName, int bookCount) {
         this.libraryName = libraryName;
+        if (bookCount > MAX_BOOKS) {
+            throw new IllegalArgumentException("Initial book count exceeds maximum allowed.");
+        }
         this.bookCount = bookCount;
         totalBooks += bookCount;
     }

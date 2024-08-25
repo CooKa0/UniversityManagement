@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 public class UniversityApp {
     public static void main(String[] args) {
+        UniversityConstants.printConstants();
         Scanner scanner = new Scanner(System.in);
 
         // Prompt the user to enter the university name

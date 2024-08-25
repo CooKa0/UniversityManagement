@@ -1,10 +1,15 @@
 package university.facilities;
 
+import university.management.UniversityConstants;
+
 public class Classroom {
     private String roomNumber;
     private int capacity;
 
     public Classroom(String roomNumber, int capacity) {
+        if (capacity > UniversityConstants.MAX_STUDENTS_PER_CLASS) {
+            throw new IllegalArgumentException("Capacity cannot exceed " + UniversityConstants.MAX_STUDENTS_PER_CLASS);
+        }
         this.roomNumber = roomNumber;
         this.capacity = capacity;
     }
