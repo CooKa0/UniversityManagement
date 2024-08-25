@@ -5,6 +5,7 @@ import university.assessment.*;
 import university.utils.UniversityUtils;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 
 public class UniversityApp {
@@ -90,7 +91,23 @@ public class UniversityApp {
         Professor professor = new Professor("Dr. Smith", LocalDate.of(2020, 5, 10));
         csDepartment.addProfessor(professor);
 
+        // Initialize managed courses for the professor
+        Course courseToManage = csDepartment.findCourseByName("Java Programming");
+        if (courseToManage != null) {
+            professor.setManagedCourses(List.of(courseToManage));
+        }
 
+        // Demonstrate professor managing courses
+        System.out.println("\nProfessor's Managed Courses:");
+        for (Course course : professor.getManagedCourses()) {
+            System.out.println(course.getCourseDetails(true));
+        }
+
+        // Display professor management details
+        System.out.println("\nProfessor Management Details:");
+        System.out.println(professor.getManagementDetails());
+
+        // Create classroom, library, exam, and assignment
         Classroom classroom = new Classroom("A101", 30);
         Library library1 = new Library("Main Library", 5000);
         Library library2 = new Library("Science Library", 3000);
