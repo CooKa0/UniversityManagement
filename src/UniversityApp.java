@@ -87,7 +87,7 @@ public class UniversityApp {
         System.out.println("\nStudent GPA:");
         System.out.println("GPA: " + student.calculateGPA());
 
-        // Create professor, classroom, exam, assignment, and libraries
+        // Create professor
         Professor professor = new Professor("Dr. Smith", LocalDate.of(2020, 5, 10));
         csDepartment.addProfessor(professor);
 
@@ -107,7 +107,7 @@ public class UniversityApp {
         System.out.println("\nProfessor Management Details:");
         System.out.println(professor.getManagementDetails());
 
-        // Create classroom, library, exam, and assignment
+        // Create classroom, library
         Classroom classroom = new Classroom("A101", 30);
         Library library1 = new Library("Main Library", 5000);
         Library library2 = new Library("Science Library", 3000);
@@ -116,13 +116,13 @@ public class UniversityApp {
         university.addLibrary(library1);
         university.addLibrary(library2);
 
-        Exam exam = new Exam("Final Exam", LocalDate.of(2024, 12, 15));
+        // Create an assignment and an exam
         Assignment assignment = new Assignment("Project 1", LocalDate.of(2024, 11, 15));
+        assignment.setId("A001");
+        assignment.setScore(85.0);
 
-        // Assignments and Exams
-        student.addAssignment(assignment, 85.0);
+        Exam exam = new Exam("Final Exam", LocalDate.of(2024, 12, 15));
         student.addExam(exam, 90.0);
-
         // Evaluate student performance
         student.evaluate();
 
@@ -152,10 +152,57 @@ public class UniversityApp {
         Worker librarian = new Worker("Jane Smith", LocalDate.of(2018, 3, 15), "Library Services");
         Worker securityGuard = new Worker("Alex Johnson", LocalDate.of(2021, 11, 1), "Security");
 
+        // Set IDs for workers
+        janitor.setId("W001");
+        librarian.setId("W002");
+        securityGuard.setId("W003");
+
         // Add workers to the university
         university.addWorker(janitor);
         university.addWorker(librarian);
         university.addWorker(securityGuard);
+
+        // Display worker IDs and details
+        System.out.println("\nWorker Details:");
+        for (Worker worker : university.getWorkers()) {
+            System.out.println(worker.getDetails());
+            System.out.println("Worker ID: " + worker.getId());
+        }
+
+        // Create events
+        Events event1 = new Events("Annual Tech Conference", LocalDate.of(2024, 9, 20), "Scheduled");
+        Events event2 = new Events("Semester Start", LocalDate.of(2024, 9, 1), "Scheduled");
+
+        // Add events to the department
+        csDepartment.addEvent(event1);
+        csDepartment.addEvent(event2);
+
+        // Display events in the department
+        System.out.println("\nEvents in the Department:");
+        for (Events event : csDepartment.getEvents()) {
+            System.out.println(event);
+        }
+
+        // Demonstrate event management
+        System.out.println("\nDemonstrating Event Management by Worker:");
+        janitor.createEvent();
+        janitor.organizeEvent();
+        janitor.modifyEvent();
+        janitor.cancelEvent();
+
+        // Display updated events in the department after worker operations
+        System.out.println("\nUpdated Events in the Department:");
+        for (Events event : csDepartment.getEvents()) {
+            System.out.println(event);
+        }
+
+        // Remove an event from the department
+        csDepartment.removeEvent(event2);
+
+        System.out.println("\nEvents in the Department After Removal:");
+        for (Events event : csDepartment.getEvents()) {
+            System.out.println(event);
+        }
 
         // Display and update assignment details
         System.out.println("\nAssignment Details:");

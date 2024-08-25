@@ -8,6 +8,7 @@ public class Department {
     private String departmentName;
     private List<Course> courses;
     private List<Professor> professors;
+    private List<Events> events;
 
     public Department(String departmentName) {
         this.departmentName = departmentName;
@@ -47,6 +48,23 @@ public class Department {
             professors = new ArrayList<>();
         }
         professors.add(professor);
+    }
+
+    public List<Events> getEvents() {
+        if (events == null) {
+            events = new ArrayList<>();
+        }
+        return events;
+    }
+
+    public void addEvent(Events event) {
+        getEvents().add(event);
+    }
+
+    public void removeEvent(Events event) {
+        if (events != null) {
+            events.remove(event);
+        }
     }
 
     public String listCourses() {
