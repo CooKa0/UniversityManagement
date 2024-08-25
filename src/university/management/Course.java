@@ -3,6 +3,7 @@ package university.management;
 public class Course {
     private String courseName;
     private int credits;
+    private double grade;
 
     public static final int MAX_COURSE_CREDITS = 5;
 
@@ -32,8 +33,16 @@ public class Course {
         this.credits = credits;
     }
 
+    public double getGrade() {
+        return grade;
+    }
+
+    public void setGrade(double grade) {
+        this.grade = grade;
+    }
+
     public String getCourseDetails() {
-        return "Course Name: " + courseName + ", Credits: " + credits;
+        return "Course Name: " + courseName + ", Credits: " + credits + ", Grade: " + grade;
     }
 
     public String getCourseDetails(boolean detailed) {
@@ -49,6 +58,7 @@ public class Course {
         return "Course{" +
                 "courseName='" + courseName + '\'' +
                 ", credits=" + credits +
+                ", grade=" + grade +
                 '}';
     }
 

@@ -6,16 +6,16 @@ import university.interfaces.Trackable;
 import university.management.Course;
 import university.assessment.Assignment;
 import university.assessment.Exam;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Student extends UniversityMember implements Evaluatable, Trackable, Identifiable {
     private LocalDate enrollmentDate;
-    private List<CourseGrade> courseGrades;
-    private List<AssignmentScore> assignments;
-    private List<ExamScore> exams;
-    private List<RegisteredCourse> registeredCourses;
+    private List<Assignment> assignments;
+    private List<Exam> exams;
+    private List<Course> registeredCourses;
     private String id;
 
     public Student(String name, LocalDate enrollmentDate) {
@@ -41,28 +41,22 @@ public class Student extends UniversityMember implements Evaluatable, Trackable,
         return "Student Name: " + name + ", Enrollment Date: " + enrollmentDate;
     }
 
-    private List<CourseGrade> getCourseGrades() {
-        if (courseGrades == null) {
-            courseGrades = new ArrayList<>();
-        }
-        return courseGrades;
-    }
 
-    private List<AssignmentScore> getAssignments() {
+    private List<Assignment> getAssignments() {
         if (assignments == null) {
             assignments = new ArrayList<>();
         }
         return assignments;
     }
 
-    private List<ExamScore> getExams() {
+    private List<Exam> getExams() {
         if (exams == null) {
             exams = new ArrayList<>();
         }
         return exams;
     }
 
-    private List<RegisteredCourse> getRegisteredCourses() {
+    private List<Course> getRegisteredCourses() {
         if (registeredCourses == null) {
             registeredCourses = new ArrayList<>();
         }
@@ -70,139 +64,64 @@ public class Student extends UniversityMember implements Evaluatable, Trackable,
     }
 
     public double calculateGPA() {
-        List<CourseGrade> grades = getCourseGrades();
-        if (grades.isEmpty()) return 0.0;
+        if (registeredCourses.isEmpty()) return 0.0;
 
         double totalPoints = 0;
         int totalCredits = 0;
 
-        for (CourseGrade courseGrade : grades) {
-            Course course = courseGrade.getCourse();
+        for (Course course : registeredCourses) {
+            double grade = course.getGrade();
             int credits = course.getCredits();
-            String status = "Completed";
 
-            if ("Completed".equalsIgnoreCase(status)) {
-                double grade = courseGrade.getGrade();
-                double normalizedGrade = grade;
-
-                totalPoints += normalizedGrade * credits;
-                totalCredits += credits;
-            }
+            totalPoints += grade * credits;
+            totalCredits += credits;
         }
 
         return totalCredits == 0 ? 0.0 : totalPoints / totalCredits;
     }
 
     public void addCourseGrade(Course course, double grade) {
-        List<CourseGrade> grades = getCourseGrades();
-        for (CourseGrade cg : grades) {
-            if (cg.getCourse().equals(course)) {
-                cg.setGrade(grade);
+        for (Course c : registeredCourses) {
+            if (c.equals(course)) {
+                c.setGrade(grade);
                 return;
             }
         }
-        grades.add(new CourseGrade(course, grade));
+        course.setGrade(grade);
+        registeredCourses.add(course);
     }
 
     public void addAssignment(Assignment assignment, double score) {
-        getAssignments().add(new AssignmentScore(assignment, score));
+        assignment.setScore(score);
+        getAssignments().add(assignment);
     }
 
     public void addExam(Exam exam, double score) {
-        getExams().add(new ExamScore(exam, score));
+        exam.setScore(score);
+        getExams().add(exam);
     }
 
-    public List<AssignmentScore> getAssignmentsList() {
-        return new ArrayList<>(getAssignments());
+    public List<Assignment> getAssignmentsList() {
+        return assignments;
     }
 
-    public List<ExamScore> getExamsList() {
-        return new ArrayList<>(getExams());
+    public List<Exam> getExamsList() {
+        return exams;
     }
 
     public String registerForCourse(Course course) {
-        List<RegisteredCourse> courses = getRegisteredCourses();
-        for (RegisteredCourse rc : courses) {
-            if (rc.getCourse().equals(course)) {
+        List<Course> courses = getRegisteredCourses();
+        for (Course rc : courses) {
+            if (rc.equals(course)) {
                 return "Already registered for " + course.getCourseName();
             }
         }
-        courses.add(new RegisteredCourse(course));
+        courses.add(course);
         return "Successfully registered for " + course.getCourseName();
     }
 
-    public List<RegisteredCourse> getRegisteredCoursesList() {
-        return new ArrayList<>(getRegisteredCourses());
-    }
-
-    public static class CourseGrade {
-        private Course course;
-        private double grade;
-
-        public CourseGrade(Course course, double grade) {
-            this.course = course;
-            this.grade = grade;
-        }
-
-        public Course getCourse() {
-            return course;
-        }
-
-        public double getGrade() {
-            return grade;
-        }
-
-        public void setGrade(double grade) {
-            this.grade = grade;
-        }
-    }
-
-    public static class AssignmentScore {
-        private Assignment assignment;
-        private double score;
-
-        public AssignmentScore(Assignment assignment, double score) {
-            this.assignment = assignment;
-            this.score = score;
-        }
-
-        public Assignment getAssignment() {
-            return assignment;
-        }
-
-        public double getScore() {
-            return score;
-        }
-    }
-
-    public static class ExamScore {
-        private Exam exam;
-        private double score;
-
-        public ExamScore(Exam exam, double score) {
-            this.exam = exam;
-            this.score = score;
-        }
-
-        public Exam getExam() {
-            return exam;
-        }
-
-        public double getScore() {
-            return score;
-        }
-    }
-
-    public static class RegisteredCourse {
-        private Course course;
-
-        public RegisteredCourse(Course course) {
-            this.course = course;
-        }
-
-        public Course getCourse() {
-            return course;
-        }
+    public List<Course> getRegisteredCoursesList() {
+        return getRegisteredCourses();
     }
 
     @Override

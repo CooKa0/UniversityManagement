@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class Assignment {
     private String assignmentTitle;
     private LocalDate dueDate;
+    private double score;
 
     public Assignment(String assignmentTitle, LocalDate dueDate) {
         this.assignmentTitle = assignmentTitle;
@@ -27,8 +28,16 @@ public class Assignment {
         this.dueDate = dueDate;
     }
 
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
     public String getAssignmentDetails() {
-        return "Assignment Title: " + assignmentTitle + ", Due Date: " + dueDate;
+        return "Assignment Title: " + assignmentTitle + ", Due Date: " + dueDate + ", Score: " + score;
     }
 
     @Override
@@ -36,6 +45,7 @@ public class Assignment {
         return "Assignment{" +
                 "assignmentTitle='" + assignmentTitle + '\'' +
                 ", dueDate=" + dueDate +
+                ", score=" + score +
                 '}';
     }
 

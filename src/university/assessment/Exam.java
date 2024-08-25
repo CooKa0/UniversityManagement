@@ -1,7 +1,5 @@
 package university.assessment;
 
-
-
 import university.interfaces.Evaluatable;
 import university.interfaces.Identifiable;
 import university.interfaces.Trackable;
@@ -11,6 +9,7 @@ import java.time.LocalDate;
 public class Exam implements Evaluatable, Trackable, Identifiable {
     private String examName;
     private LocalDate examDate;
+    private double score;
     private String id;
     private String progressReport;
 
@@ -35,6 +34,14 @@ public class Exam implements Evaluatable, Trackable, Identifiable {
         this.examDate = examDate;
     }
 
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
     public void scheduleExam() {
         if (examDate == null) {
             examDate = LocalDate.now().plusDays(30);
@@ -46,9 +53,9 @@ public class Exam implements Evaluatable, Trackable, Identifiable {
 
     public String getExamDetails(boolean includeDate) {
         if (includeDate) {
-            return "Exam Name: " + examName + ", Date: " + examDate;
+            return "Exam Name: " + examName + ", Date: " + examDate + ", Score: " + score;
         } else {
-            return "Exam Name: " + examName;
+            return "Exam Name: " + examName + ", Score: " + score;
         }
     }
 
@@ -57,6 +64,7 @@ public class Exam implements Evaluatable, Trackable, Identifiable {
         return "Exam{" +
                 "examName='" + examName + '\'' +
                 ", examDate=" + examDate +
+                ", score=" + score +
                 '}';
     }
 

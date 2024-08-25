@@ -74,8 +74,7 @@ public class UniversityApp {
 
         // Display registered courses
         System.out.println("\nRegistered Courses:");
-        for (Student.RegisteredCourse entry : student.getRegisteredCoursesList()) {
-            Course course = entry.getCourse();
+        for (Course course : student.getRegisteredCoursesList()) {
             System.out.println(course.getCourseName() + " - Status: Registered");
         }
 
@@ -107,16 +106,14 @@ public class UniversityApp {
 
         // Print assignment and exam details
         System.out.println("\nAssignments:");
-        for (Student.AssignmentScore entry : student.getAssignmentsList()) {
-            Assignment a = entry.getAssignment();
-            Double score = entry.getScore();
+        for (Assignment a : student.getAssignmentsList()) {
+            Double score = a.getScore();
             System.out.println(a.getAssignmentDetails() + " - Score: " + score);
         }
 
         System.out.println("\nExams:");
-        for (Student.ExamScore entry : student.getExamsList()) {
-            Exam e = entry.getExam();
-            Double score = entry.getScore();
+        for (Exam e : student.getExamsList()) {
+            Double score = e.getScore();
             System.out.println(e.getExamDetails(true) + " - Score: " + score);
         }
 
