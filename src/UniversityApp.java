@@ -116,13 +116,13 @@ public class UniversityApp {
         // Print assignment and exam details
         System.out.println("\nAssignments:");
         for (Assignment a : student.getAssignmentsList()) {
-            Double score = a.getScore();
+            double score = a.getScore();
             System.out.println(a.getAssignmentDetails() + " - Score: " + score);
         }
 
         System.out.println("\nExams:");
         for (Exam e : student.getExamsList()) {
-            Double score = e.getScore();
+            double score = e.getScore();
             System.out.println(e.getExamDetails(true) + " - Score: " + score);
         }
 
