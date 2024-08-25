@@ -17,10 +17,12 @@ public class Student extends UniversityMember implements Evaluatable, Trackable,
     private List<Exam> exams;
     private List<Course> registeredCourses;
     private String id;
+    private String progressReport;
 
     public Student(String name, LocalDate enrollmentDate) {
         super(name);
         this.enrollmentDate = enrollmentDate;
+        this.progressReport = "Initial progress report";
     }
 
     public LocalDate getEnrollmentDate() {
@@ -127,23 +129,63 @@ public class Student extends UniversityMember implements Evaluatable, Trackable,
     @Override
     public void evaluate() {
         System.out.println("Evaluating student performance...");
+        double averageAssignmentScore = getAssignments().stream().mapToDouble(Assignment::getScore).average().orElse(0);
+        double averageExamScore = getExams().stream().mapToDouble(Exam::getScore).average().orElse(0);
+        double overallPerformance = (averageAssignmentScore + averageExamScore) / 2;
+
+        System.out.println("Average Assignment Score: " + averageAssignmentScore);
+        System.out.println("Average Exam Score: " + averageExamScore);
+        System.out.println("Overall Performance Score: " + overallPerformance);
     }
 
     @Override
     public String getEvaluationCriteria() {
-        return "Student Evaluation Criteria";
+        return "Student Evaluation Criteria:\n" +
+                "Assignments and Exams are evaluated based on average scores.\n" +
+                "Overall performance is the average of assignment and exam scores.";
     }
 
     @Override
     public void trackProgress() {
-        System.out.println("Tracking student progress...");
+        LocalDate currentDate = LocalDate.now();
+        StringBuilder report = new StringBuilder();
+        report.append("Student Progress Report:\n");
+        report.append("Date: ").append(currentDate).append("\n");
+
+        if (getRegisteredCourses().isEmpty()) {
+            report.append("No courses registered.\n");
+        } else {
+            report.append("Registered Courses:\n");
+            for (Course course : getRegisteredCourses()) {
+                report.append(course.getCourseDetails()).append("\n");
+            }
+        }
+
+        if (getAssignments().isEmpty() && getExams().isEmpty()) {
+            report.append("No assignments or exams available.\n");
+        } else {
+            report.append("Assignments:\n");
+            for (Assignment assignment : getAssignments()) {
+                report.append(assignment.getAssignmentDetails()).append("\n");
+            }
+            report.append("Exams:\n");
+            for (Exam exam : getExams()) {
+                report.append(exam.getExamDetails(true)).append("\n");
+            }
+        }
+
+        this.progressReport = report.toString();
     }
 
     @Override
     public String getProgressReport() {
-        return "Student Progress Report";
+        return this.progressReport;
     }
 
+    @Override
+    public void setProgressReport(String progressReport) {
+        this.progressReport = progressReport;
+    }
 
     @Override
     public String getId() {
@@ -169,9 +211,11 @@ public class Student extends UniversityMember implements Evaluatable, Trackable,
     public boolean equals(Object obj) {
         if (!super.equals(obj)) return false;
 
-        Student student = (Student) obj;
-
-        return calculateGPA() == student.calculateGPA();
+        if (obj instanceof Student) {
+            Student student = (Student) obj;
+            return calculateGPA() == student.calculateGPA();
+        }
+        return false;
     }
 
 

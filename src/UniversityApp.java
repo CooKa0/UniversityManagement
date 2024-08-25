@@ -23,6 +23,7 @@ public class UniversityApp {
         int month = scanner.nextInt();
         System.out.print("Day: ");
         int day = scanner.nextInt();
+        scanner.nextLine();
 
         // Create the university with the provided data
         University university = new University(universityName, LocalDate.of(year, month, day));
@@ -49,6 +50,7 @@ public class UniversityApp {
 
         // Create a new student and register for courses
         Student student = new Student("Alice", LocalDate.of(2024, 9, 1));
+        student.setId("S12345");
         university.addStudent(student);
 
         Course javaCourseToRegister = csDepartment.findCourseByName("Java Programming");
@@ -104,6 +106,13 @@ public class UniversityApp {
         student.addAssignment(assignment, 85.0);
         student.addExam(exam, 90.0);
 
+        // Evaluate student performance
+        student.evaluate();
+
+        // Track and print student progress
+        student.trackProgress();
+        System.out.println(student.getProgressReport());
+
         // Print assignment and exam details
         System.out.println("\nAssignments:");
         for (Assignment a : student.getAssignmentsList()) {
@@ -116,6 +125,10 @@ public class UniversityApp {
             Double score = e.getScore();
             System.out.println(e.getExamDetails(true) + " - Score: " + score);
         }
+
+        // Print student ID
+        System.out.println("\nStudent ID:");
+        System.out.println(student.getId());
 
         // Create workers
         Worker janitor = new Worker("John Doe", LocalDate.of(2020, 6, 1), "Maintenance");
