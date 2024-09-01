@@ -5,6 +5,7 @@ import university.facilities.*;
 import university.assessment.*;
 import university.utils.UniversityUtils;
 import java.util.logging.Logger;
+import java.util.logging.LogManager;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,7 +21,7 @@ public class UniversityApp {
         UniversityConstants.printConstants();
         Scanner scanner = new Scanner(System.in);
         try {
-            logger.info("Starting the university app...");
+            LogManager.getLogManager().readConfiguration(UniversityApp.class.getResourceAsStream("/logging.properties"));
 
         // Prompt the user to enter the university name
         System.out.print("Enter the name of the university: ");
