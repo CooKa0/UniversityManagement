@@ -2,6 +2,8 @@ package university.management;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import university.exceptions.ProfessorLimitExceededException;
 import university.personnel.Professor;
 
 
@@ -41,9 +43,9 @@ public class Department {
         return professors;
     }
 
-    public void addProfessor(Professor professor) {
+    public void addProfessor(Professor professor) throws ProfessorLimitExceededException {
         if (getProfessors().size() >= UniversityConstants.MAX_PROFESSORS_PER_DEPARTMENT) {
-            throw new IllegalStateException("Cannot add more professors. Maximum limit reached.");
+            throw new ProfessorLimitExceededException("Cannot add more professors. Maximum limit reached.");
         }
         getProfessors().add(professor);
     }

@@ -1,17 +1,26 @@
+import university.exceptions.ProfessorLimitExceededException;
 import university.management.*;
 import university.personnel.*;
 import university.facilities.*;
 import university.assessment.*;
 import university.utils.UniversityUtils;
+import java.util.logging.Logger;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
 public class UniversityApp {
+
+    private static final Logger logger = Logger.getLogger(UniversityApp.class.getName());
+
+
+
     public static void main(String[] args) {
         UniversityConstants.printConstants();
         Scanner scanner = new Scanner(System.in);
+        try {
+            logger.info("Starting the university app...");
 
         // Prompt the user to enter the university name
         System.out.print("Enter the name of the university: ");
@@ -90,7 +99,11 @@ public class UniversityApp {
 
         // Create professor
         Professor professor = new Professor("Dr. Smith", LocalDate.of(2020, 5, 10));
-        csDepartment.addProfessor(professor);
+        try {
+            csDepartment.addProfessor(professor);
+        } catch (ProfessorLimitExceededException e) {
+            System.err.println(e.getMessage());
+        }
 
         // Initialize managed courses for the professor
         Course courseToManage = csDepartment.findCourseByName("Java Programming");
@@ -408,5 +421,10 @@ public class UniversityApp {
             UniversityUtils.compareMembers(janitor, librarian);
 
         }
+        } catch (Exception e) {
+            logger.severe("Error: " + e.getMessage());
+        }
+        logger.info("University app finished.");
+
     }
 }
