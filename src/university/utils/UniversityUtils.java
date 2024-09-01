@@ -37,26 +37,26 @@ public class UniversityUtils {
         printSpecificDetails(member2);
     }
 
-        private static void printSpecificDetails(UniversityMember member) {
-            if (member instanceof Student) {
-                Student student = (Student) member;
-                System.out.println("Name: " + student.getName());
-                System.out.println("Role: " + student.getRole());
-                System.out.println("Enrollment Date: " + student.getEnrollmentDate());
-                System.out.println("GPA: " + student.calculateGPA());
-            } else if (member instanceof Professor) {
-                Professor professor = (Professor) member;
-                System.out.println("Name: " + professor.getName());
-                System.out.println("Role: " + professor.getRole());
-                System.out.println("Hire Date: " + professor.getHireDate());
-            } else if (member instanceof Worker) {
-                Worker worker = (Worker) member;
-                System.out.println("Name: " + worker.getName());
-                System.out.println("Role: " + worker.getRole());
-                System.out.println("Hire Date: " + worker.getHireDate());
-            } else {
-                System.out.println("Name: " + member.getName());
-                System.out.println("Role: " + member.getRole());
-            }
+    private static void printSpecificDetails(UniversityMember member) {
+        if (member instanceof Student) {
+            Student student = (Student) member;
+            System.out.println("Name: " + student.getName());
+            System.out.println("Role: " + student.getRole());
+            System.out.println("Enrollment Date: " + student.getEnrollmentDate());
+            System.out.println("GPA: " + student.calculateGPA());
+        } else if (member instanceof Professor) {
+            Professor professor = (Professor) member;
+            System.out.println("Name: " + professor.getName());
+            System.out.println("Role: " + professor.getRole());
+            System.out.println("Hire Date: " + professor.getHireDate());
+        } else if (member instanceof Worker) {
+            Worker worker = (Worker) member;
+            System.out.println("Name: " + worker.getName());
+            System.out.println("Role: " + worker.getRole());
+            System.out.println("Hire Date: " + worker.getHireDate());
+        } else {
+            System.out.println("Name: " + member.getName());
+            System.out.println("Role: " + member.getRole());
+        }
     }
 }
