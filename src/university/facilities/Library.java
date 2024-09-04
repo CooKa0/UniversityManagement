@@ -5,7 +5,7 @@ public class Library {
     private int bookCount;
 
     private static final int MAX_BOOKS = 10000;
-    private static int totalBooks = 0;
+    private static int totalBooks;
 
     public Library(String libraryName, int bookCount) {
         this.libraryName = libraryName;
