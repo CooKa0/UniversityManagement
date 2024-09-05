@@ -2,6 +2,7 @@ package university.personnel;
 
 import university.interfaces.Manageable;
 import university.management.Course;
+import university.utils.CustomLinkedList;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -9,16 +10,17 @@ import java.util.ArrayList;
 
 
 public class Professor extends UniversityMember implements Manageable {
-    private List<Course> managedCourses;
+    private CustomLinkedList<Course> managedCourses;
 
     public Professor(String name, LocalDate hireDate) {
         super(name, hireDate);
     }
 
-    private void initializeManagedCourses() {
+    private CustomLinkedList<Course> getManagedCoursesList() {
         if (managedCourses == null) {
-            managedCourses = new ArrayList<>();
+            managedCourses = new CustomLinkedList<>(); // Initialize when accessed
         }
+        return managedCourses;
     }
 
     @Override
@@ -56,29 +58,32 @@ public class Professor extends UniversityMember implements Manageable {
 
     @Override
     public void manage() {
-        initializeManagedCourses();
         System.out.println("Managing the following courses:");
-        for (Course course : managedCourses) {
+        for (int i = 0; i < getManagedCoursesList().size(); i++) {
+            Course course = getManagedCoursesList().get(i);
             System.out.println(course.getCourseDetails(true));
         }
     }
 
     @Override
     public String getManagementDetails() {
-        initializeManagedCourses();
         StringBuilder details = new StringBuilder("Managed Courses:\n");
-        for (Course course : managedCourses) {
+        for (int i = 0; i < getManagedCoursesList().size(); i++) {
+            Course course = getManagedCoursesList().get(i);
             details.append(course.getCourseDetails(true)).append("\n");
         }
         return details.toString();
     }
 
-    public void setManagedCourses(List<Course> courses) {
-        this.managedCourses = courses;
+    public void addManagedCourse(Course course) {
+        getManagedCoursesList().add(course);
     }
 
-    public List<Course> getManagedCourses() {
-        initializeManagedCourses();
-        return managedCourses;
+    public void removeManagedCourse(int index) {
+        getManagedCoursesList().remove(index);
+    }
+
+    public CustomLinkedList<Course> getManagedCourses() {
+        return getManagedCoursesList();
     }
 }

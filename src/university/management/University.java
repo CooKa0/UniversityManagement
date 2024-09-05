@@ -1,22 +1,21 @@
 package university.management;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import university.personnel.Student;
 import university.facilities.Classroom;
 import university.facilities.Library;
 import university.personnel.Worker;
 
+
 public class University {
     private String name;
     private LocalDate establishedDate;
-    private List<Department> departments;
-    private List<Student> students;
-    private List<Library> libraries;
-    private List<Classroom> classrooms;
-    private List<Worker> workers;
-    private static int universityCount = 0;
+    private Department[] departments;
+    private Student[] students;
+    private Library[] libraries;
+    private Classroom[] classrooms;
+    private Worker[] workers;
+    private static int universityCount;
 
     static {
         System.out.println("University class loaded. Initializing static variables...");
@@ -44,74 +43,84 @@ public class University {
         this.establishedDate = establishedDate;
     }
 
-    public List<Department> getDepartments() {
-        if (departments == null) {
-            departments = new ArrayList<>();
-        }
+    public Department[] getDepartments() {
         return departments;
     }
 
     public void addDepartment(Department department) {
         if (departments == null) {
-            departments = new ArrayList<>();
+            departments = new Department[1];
+            departments[0] = department;
+        } else {
+            Department[] temp = new Department[departments.length + 1];
+            System.arraycopy(departments, 0, temp, 0, departments.length);
+            temp[departments.length] = department;
+            departments = temp;
         }
-        departments.add(department);
     }
 
-    public List<Student> getStudents() {
-        if (students == null) {
-            students = new ArrayList<>();
-        }
+    public Student[] getStudents() {
         return students;
     }
 
     public void addStudent(Student student) {
         if (students == null) {
-            students = new ArrayList<>();
+            students = new Student[1];
+            students[0] = student;
+        } else {
+            Student[] temp = new Student[students.length + 1];
+            System.arraycopy(students, 0, temp, 0, students.length);
+            temp[students.length] = student;
+            students = temp;
         }
-        students.add(student);
     }
 
-    public List<Library> getLibraries() {
-        if (libraries == null) {
-            libraries = new ArrayList<>();
-        }
+    public Library[] getLibraries() {
         return libraries;
     }
 
     public void addLibrary(Library library) {
         if (libraries == null) {
-            libraries = new ArrayList<>();
+            libraries = new Library[1];
+            libraries[0] = library;
+        } else {
+            Library[] temp = new Library[libraries.length + 1];
+            System.arraycopy(libraries, 0, temp, 0, libraries.length);
+            temp[libraries.length] = library;
+            libraries = temp;
         }
-        libraries.add(library);
     }
 
-    public List<Classroom> getClassrooms() {
-        if (classrooms == null) {
-            classrooms = new ArrayList<>();
-        }
+    public Classroom[] getClassrooms() {
         return classrooms;
     }
 
     public void addClassroom(Classroom classroom) {
         if (classrooms == null) {
-            classrooms = new ArrayList<>();
+            classrooms = new Classroom[1];
+            classrooms[0] = classroom;
+        } else {
+            Classroom[] temp = new Classroom[classrooms.length + 1];
+            System.arraycopy(classrooms, 0, temp, 0, classrooms.length);
+            temp[classrooms.length] = classroom;
+            classrooms = temp;
         }
-        classrooms.add(classroom);
     }
 
-    public List<Worker> getWorkers() {
-        if (workers == null) {
-            workers = new ArrayList<>();
-        }
+    public Worker[] getWorkers() {
         return workers;
     }
 
     public void addWorker(Worker worker) {
         if (workers == null) {
-            workers = new ArrayList<>();
+            workers = new Worker[1];
+            workers[0] = worker;
+        } else {
+            Worker[] temp = new Worker[workers.length + 1];
+            System.arraycopy(workers, 0, temp, 0, workers.length);
+            temp[workers.length] = worker;
+            workers = temp;
         }
-        workers.add(worker);
     }
 
     public String getUniversityInfo() {

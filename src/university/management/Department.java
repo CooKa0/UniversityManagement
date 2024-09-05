@@ -1,7 +1,6 @@
 package university.management;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import university.exceptions.ProfessorLimitExceededException;
 import university.personnel.Professor;
@@ -10,7 +9,8 @@ import university.personnel.Professor;
 public class Department {
     private String departmentName;
     private List<Course> courses;
-    private List<Professor> professors;
+    //using set to avoid duplicating professors
+    private Set<Professor> professors;
     private List<Events> events;
 
     public Department(String departmentName) {
@@ -27,6 +27,7 @@ public class Department {
 
     public List<Course> getCourses() {
         if (courses == null) {
+            // Use ArrayList for dynamic sizing and random access
             courses = new ArrayList<>();
         }
         return courses;
@@ -36,9 +37,10 @@ public class Department {
         getCourses().add(course);
     }
 
-    public List<Professor> getProfessors() {
+    public Set<Professor> getProfessors() {
         if (professors == null) {
-            professors = new ArrayList<>();
+            // Use HashSet to ensure no duplicate professors
+            professors = new HashSet<>();
         }
         return professors;
     }

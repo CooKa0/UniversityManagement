@@ -109,13 +109,14 @@ public class UniversityApp {
         // Initialize managed courses for the professor
         Course courseToManage = csDepartment.findCourseByName("Java Programming");
         if (courseToManage != null) {
-            professor.setManagedCourses(List.of(courseToManage));
+            professor.addManagedCourse(courseToManage);
         }
 
         // Demonstrate professor managing courses
         System.out.println("\nProfessor's Managed Courses:");
-        for (Course course : professor.getManagedCourses()) {
-            System.out.println(course.getCourseDetails(true));
+            for (int i = 0; i < professor.getManagedCourses().size(); i++) {
+                Course course = professor.getManagedCourses().get(i);
+                System.out.println(course.getCourseDetails(true));
         }
 
         // Display professor management details
