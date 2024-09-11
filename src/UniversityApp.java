@@ -141,6 +141,7 @@ public class UniversityApp {
         library1.addBook(book1);
         library1.addBook(book2);
 
+
         // Create an assignment and an exam
         Assignment assignment = new Assignment("Project 1", LocalDate.of(2024, 11, 15));
         assignment.setId("A001");
@@ -281,6 +282,18 @@ public class UniversityApp {
             System.out.println(cls.getClassroomInfo());
         }
 
+        // Display library information
+        System.out.println("\nLibraries:");
+        for (Library lib : university.getLibraries()) {
+            System.out.println("Library Name: " + lib.getLibraryName());
+            System.out.println("Number of Books: " + lib.getBookCount());
+            System.out.println("Library Info: " + lib.getLibraryInfo());
+        }
+
+        // Update library names
+        library1.setLibraryName("Updated Main Library");
+        library2.setLibraryName("Updated Science Library");
+
         // Create new books
         Books newBook = new Books("Effective Java", "Joshua Bloch", 2018);
 
@@ -300,10 +313,14 @@ public class UniversityApp {
         System.out.println(library1.getLibraryInfo());
         System.out.println(library2.getLibraryInfo());
 
-// displays all books
-//        System.out.println("\nBooks in " + library1.getLibraryName() + ":");
-//        for (Books book : library1.getBooksList()) {
-//            System.out.println(book.getBookDetails());
+
+//        // List all books in each library
+//        System.out.println("\nBooks in Libraries:");
+//        for (Library lib : university.getLibraries()) {
+//            System.out.println("\nLibrary: " + lib.getLibraryName());
+//            for (Books book : lib.getBooksList()) {
+//                System.out.println(book.getBookDetails());
+//            }
 //        }
 
         // Check Availability
