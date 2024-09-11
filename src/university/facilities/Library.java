@@ -1,5 +1,7 @@
 package university.facilities;
 
+import university.exceptions.LibraryFullException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,29 +15,30 @@ public class Library {
 
     public Library(String libraryName, int initialBookCount) {
         this.libraryName = libraryName;
-        this.booksList = new ArrayList<>();
+        this.bookCount = initialBookCount;
 
         if (initialBookCount > MAX_BOOKS) {
             throw new IllegalArgumentException("Initial book count exceeds the maximum allowed.");
         }
 
-        for (int i = 0; i < initialBookCount; i++) {
-            booksList.add(new Books("Book" + (i + 1), "Author" + (i + 1), 2020 + (i % 5)));
+        if (initialBookCount > 0) {
+            this.booksList = new ArrayList<>();
+            for (int i = 0; i < initialBookCount; i++) {
+                booksList.add(new Books("Book" + (i + 1), "Author" + (i + 1), 2020 + (i % 5)));
+            }
         }
-        this.bookCount = initialBookCount;
         totalBooksAcrossAllLibraries += initialBookCount;
     }
 
 
     // Adds a book to the current library and updates the global book count
     public void addBook(Books book) {
-        if (bookCount < MAX_BOOKS) {
-            booksList.add(book);
-            bookCount++;
-            totalBooksAcrossAllLibraries++;
-        } else {
-            System.out.println("Cannot add more books. Maximum limit reached.");
+        if (bookCount >= MAX_BOOKS) {
+            throw new LibraryFullException("Cannot add more books. Maximum limit reached.");
         }
+        booksList.add(book);
+        bookCount++;
+        totalBooksAcrossAllLibraries++;
     }
 
     // Removes a book from the current library and updates the global book count
