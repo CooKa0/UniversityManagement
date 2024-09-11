@@ -4,14 +4,16 @@ import java.util.*;
 
 import university.exceptions.ProfessorLimitExceededException;
 import university.personnel.Professor;
+import university.utils.CustomLinkedList;
 
 
 public class Department {
     private String departmentName;
-    private List<Course> courses;
+    //using map to manage courses
+    private Map<String, Course> courses;
     //using set to avoid duplicating professors
     private Set<Professor> professors;
-    private List<Events> events;
+    private CustomLinkedList<Events> events;
 
     public Department(String departmentName) {
         this.departmentName = departmentName;
@@ -25,16 +27,16 @@ public class Department {
         this.departmentName = departmentName;
     }
 
-    public List<Course> getCourses() {
+    public Map<String, Course> getCourses() {
         if (courses == null) {
-            // Use ArrayList for dynamic sizing and random access
-            courses = new ArrayList<>();
+            // Use HashMap for dynamic sizing and efficient lookups
+            courses = new HashMap<>();
         }
         return courses;
     }
 
     public void addCourse(Course course) {
-        getCourses().add(course);
+        getCourses().put(course.getCourseName(), course);
     }
 
     public Set<Professor> getProfessors() {
@@ -52,9 +54,9 @@ public class Department {
         getProfessors().add(professor);
     }
 
-    public List<Events> getEvents() {
+    public CustomLinkedList<Events> getEvents() {
         if (events == null) {
-            events = new ArrayList<>();
+            events = new CustomLinkedList<>();
         }
         return events;
     }
@@ -63,15 +65,15 @@ public class Department {
         getEvents().add(event);
     }
 
-    public void removeEvent(Events event) {
-        if (events != null) {
-            events.remove(event);
+    public void removeEvent(int index) {
+        if (events != null && index >= 0 && index < events.size()) {
+            getEvents().remove(index);
         }
     }
 
     public String listCourses() {
         StringBuilder courseList = new StringBuilder();
-        for (Course course : courses) {
+        for (Course course : getCourses().values()) {
             courseList.append(course.getCourseName()).append("\n");
         }
         return courseList.toString();
@@ -79,7 +81,7 @@ public class Department {
 
     public String listCourses(boolean detailed) {
         StringBuilder courseList = new StringBuilder();
-        for (Course course : courses) {
+        for (Course course : getCourses().values()) {
             if (detailed) {
                 courseList.append("Course Name: ").append(course.getCourseName())
                         .append(", Credits: ").append(course.getCredits())
@@ -92,12 +94,7 @@ public class Department {
     }
 
     public Course findCourseByName(String courseName) {
-        for (Course course : courses) {
-            if (course.getCourseName().equalsIgnoreCase(courseName)) {
-                return course;
-            }
-        }
-        return null;
+        return getCourses().get(courseName);
     }
 
     @Override

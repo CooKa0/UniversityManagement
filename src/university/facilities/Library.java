@@ -1,19 +1,49 @@
 package university.facilities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Library {
     private String libraryName;
     private int bookCount;
+    private List<Books> booksList;
 
     private static final int MAX_BOOKS = 10000;
-    private static int totalBooks;
+    private static int totalBooksAcrossAllLibraries;
 
-    public Library(String libraryName, int bookCount) {
+    public Library(String libraryName, int initialBookCount) {
         this.libraryName = libraryName;
-        if (bookCount > MAX_BOOKS) {
-            throw new IllegalArgumentException("Initial book count exceeds maximum allowed.");
+        this.booksList = new ArrayList<>();
+
+        if (initialBookCount > MAX_BOOKS) {
+            throw new IllegalArgumentException("Initial book count exceeds the maximum allowed.");
         }
-        this.bookCount = bookCount;
-        totalBooks += bookCount;
+
+        for (int i = 0; i < initialBookCount; i++) {
+            booksList.add(new Books("Book" + (i + 1), "Author" + (i + 1), 2020 + (i % 5)));
+        }
+        this.bookCount = initialBookCount;
+        totalBooksAcrossAllLibraries += initialBookCount;
+    }
+
+
+    // Adds a book to the current library and updates the global book count
+    public void addBook(Books book) {
+        if (bookCount < MAX_BOOKS) {
+            booksList.add(book);
+            bookCount++;
+            totalBooksAcrossAllLibraries++;
+        } else {
+            System.out.println("Cannot add more books. Maximum limit reached.");
+        }
+    }
+
+    // Removes a book from the current library and updates the global book count
+    public void removeBook(Books book) {
+        if (booksList.remove(book)) {
+            bookCount--;
+            totalBooksAcrossAllLibraries--;
+        }
     }
 
     public String getLibraryName() {
@@ -28,18 +58,17 @@ public class Library {
         return bookCount;
     }
 
-    public void setBookCount(int bookCount) {
-        totalBooks -= this.bookCount;
-        this.bookCount = bookCount;
-        totalBooks += bookCount;
+    public List<Books> getBooksList() {
+        return booksList;
+    }
+
+    // Returns the total number of books across all libraries
+    public static int getTotalBooksAcrossAllLibraries() {
+        return totalBooksAcrossAllLibraries;
     }
 
     public String getLibraryInfo() {
         return "Library Name: " + libraryName + ", Book Count: " + bookCount;
-    }
-
-    public static int getTotalBooks() {
-        return totalBooks;
     }
 
     @Override
@@ -47,6 +76,7 @@ public class Library {
         return "Library{" +
                 "libraryName='" + libraryName + '\'' +
                 ", bookCount=" + bookCount +
+                ", booksList=" + booksList +
                 '}';
     }
 

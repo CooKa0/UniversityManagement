@@ -13,9 +13,20 @@ public class Worker extends UniversityMember implements EventOrganizable, Identi
     private String id;
     private List<Events> events;
 
-    public Worker(String name, LocalDate hireDate, String department) {
+    private double baseSalary;
+    private double bonus;
+    private double hourlyRate;
+    private int hoursWorked;
+    private static final int STANDARD_WORK_HOURS = 160;
+    private static final double OVERTIME_MULTIPLIER = 1.5;
+
+    public Worker(String name, LocalDate hireDate, String department, double baseSalary, double bonus, double hourlyRate, int hoursWorked) {
         super(name, hireDate);
         this.department = department;
+        this.baseSalary = baseSalary;
+        this.bonus = bonus;
+        this.hourlyRate = hourlyRate;
+        this.hoursWorked = hoursWorked;
     }
 
     private List<Events> getOrCreateEvents() {
@@ -23,6 +34,20 @@ public class Worker extends UniversityMember implements EventOrganizable, Identi
             events = new ArrayList<>();
         }
         return events;
+    }
+
+    public double calculateSalary() {
+        double totalSalary = baseSalary + bonus;
+
+        if (hoursWorked > STANDARD_WORK_HOURS) {
+            int overtimeHours = hoursWorked - STANDARD_WORK_HOURS;
+            double overtimePay = overtimeHours * hourlyRate * OVERTIME_MULTIPLIER;
+            totalSalary += overtimePay;
+        } else {
+            totalSalary += hoursWorked + hourlyRate;
+        }
+
+        return  totalSalary;
     }
 
     @Override

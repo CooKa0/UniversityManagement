@@ -3,12 +3,12 @@ import university.management.*;
 import university.personnel.*;
 import university.facilities.*;
 import university.assessment.*;
+import university.utils.CustomLinkedList;
 import university.utils.UniversityUtils;
 import java.util.logging.Logger;
 import java.util.logging.LogManager;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Scanner;
 
 public class UniversityApp {
@@ -132,6 +132,15 @@ public class UniversityApp {
         university.addLibrary(library1);
         university.addLibrary(library2);
 
+
+        // Create new books
+        Books book1 = new Books("Introduction to Algorithms", "Thomas H. Cormen", 2009);
+        Books book2 = new Books("Clean Code", "Robert C. Martin", 2008);
+
+        // Add books to libraries
+        library1.addBook(book1);
+        library1.addBook(book2);
+
         // Create an assignment and an exam
         Assignment assignment = new Assignment("Project 1", LocalDate.of(2024, 11, 15));
         assignment.setId("A001");
@@ -164,9 +173,9 @@ public class UniversityApp {
         System.out.println(student.getId());
 
         // Create workers
-        Worker janitor = new Worker("John Doe", LocalDate.of(2020, 6, 1), "Maintenance");
-        Worker librarian = new Worker("Jane Smith", LocalDate.of(2018, 3, 15), "Library Services");
-        Worker securityGuard = new Worker("Alex Johnson", LocalDate.of(2021, 11, 1), "Security");
+        Worker janitor = new Worker("John Doe", LocalDate.of(2020, 6, 1), "Maintenance", 2000.00, 200.00, 15.00, 160);
+        Worker librarian = new Worker("Jane Smith", LocalDate.of(2018, 3, 15), "Library Services", 2500.00, 300.00, 20.00, 140);
+        Worker securityGuard = new Worker("Alex Johnson", LocalDate.of(2021, 11, 1), "Security", 2200.00, 250.00, 18.00, 150);
 
         // Set IDs for workers
         janitor.setId("W001");
@@ -183,6 +192,7 @@ public class UniversityApp {
         for (Worker worker : university.getWorkers()) {
             System.out.println(worker.getDetails());
             System.out.println("Worker ID: " + worker.getId());
+            System.out.println("Monthly Salary: " + worker.calculateSalary());
         }
 
         // Create events
@@ -195,7 +205,9 @@ public class UniversityApp {
 
         // Display events in the department
         System.out.println("\nEvents in the Department:");
-        for (Events event : csDepartment.getEvents()) {
+        CustomLinkedList<Events> eventsList = csDepartment.getEvents();
+            for (int i = 0; i < eventsList.size(); i++) {
+            Events event = eventsList.get(i);
             System.out.println(event);
         }
 
@@ -208,16 +220,19 @@ public class UniversityApp {
 
         // Display updated events in the department after worker operations
         System.out.println("\nUpdated Events in the Department:");
-        for (Events event : csDepartment.getEvents()) {
-            System.out.println(event);
+            for (int i = 0; i < eventsList.size(); i++) {
+                Events event = eventsList.get(i);
+                System.out.println(event);
         }
 
         // Remove an event from the department
-        csDepartment.removeEvent(event2);
+            int indexToRemove = 1;
+            csDepartment.removeEvent(indexToRemove);
 
         System.out.println("\nEvents in the Department After Removal:");
-        for (Events event : csDepartment.getEvents()) {
-            System.out.println(event);
+            for (int i = 0; i < eventsList.size(); i++) {
+                Events event = eventsList.get(i);
+                System.out.println(event);
         }
 
         // Display and update assignment details
@@ -266,30 +281,46 @@ public class UniversityApp {
             System.out.println(cls.getClassroomInfo());
         }
 
+        // Create new books
+        Books newBook = new Books("Effective Java", "Joshua Bloch", 2018);
+
+        // Adding Books with Details
+        System.out.println("\nAdding book: " + newBook.getBookDetails());
+        library1.addBook(newBook);
+
+        // Update Book Information
+        newBook.setTitle("Effective Java (3rd Edition)");
+        newBook.setAuthor("Joshua Bloch");
+        newBook.setYearPublished(2019);
+        newBook.setAvailable(false);
+        System.out.println("Updated book details: " + newBook.getBookDetails());
+
         // Display and update library information
         System.out.println("\nLibrary Information:");
         System.out.println(library1.getLibraryInfo());
         System.out.println(library2.getLibraryInfo());
 
-        String lib1Name = library1.getLibraryName();
-        int lib1Books = library1.getBookCount();
+// displays all books
+//        System.out.println("\nBooks in " + library1.getLibraryName() + ":");
+//        for (Books book : library1.getBooksList()) {
+//            System.out.println(book.getBookDetails());
+//        }
 
-        System.out.println("\nLibrary 1 Name: " + lib1Name);
-        System.out.println("Library 1 Book Count: " + lib1Books);
+        // Check Availability
+        if (newBook.isAvailable()) {
+            System.out.println("The book is available for checkout.");
+        } else {
+            System.out.println("The book is currently checked out.");
+        }
 
-        library1.setLibraryName("Updated Main Library");
-        library1.setBookCount(6000);
-
-        System.out.println("\nUpdated Library 1 Information:");
+        // Remove Books
+        library1.removeBook(newBook);
+        System.out.println("Removed book: " + newBook.getBookDetails());
+        System.out.println("Updated Library 1 Information:");
         System.out.println(library1.getLibraryInfo());
-        System.out.println("Total Books in All Libraries: " + Library.getTotalBooks());
+        System.out.println("Total Books Across All Libraries: " + Library.getTotalBooksAcrossAllLibraries());
 
-        library2.setBookCount(8500);
-
-        System.out.println("\nUpdated Library 2 Information:");
-        System.out.println(library2.getLibraryInfo());
-        System.out.println("Total Books in All Libraries: " + Library.getTotalBooks());
-
+        // Display all libraries
         System.out.println("\nLibraries:");
         for (Library lib : university.getLibraries()) {
             System.out.println(lib.getLibraryInfo());
@@ -300,7 +331,7 @@ public class UniversityApp {
         System.out.println("Department Name: " + csDepartment.getDepartmentName());
 
         System.out.println("Courses with Credits:");
-        for (Course course : csDepartment.getCourses()) {
+        for (Course course : csDepartment.getCourses().values()) {
             System.out.println(course.getCourseName() + " - Credits: " + course.getCredits());
         }
 
@@ -334,9 +365,9 @@ public class UniversityApp {
             System.out.println("Department Name: " + dept.getDepartmentName());
             System.out.println("Courses:");
 
-            for (Course course : dept.getCourses()) {
-                System.out.println(course.getCourseName() + " - Credits: " + course.getCredits());
-            }
+        for (Course course : dept.getCourses().values()) {
+            System.out.println(course.getCourseName() + " - Credits: " + course.getCredits());
+        }
 
             // Display and update professor details
             System.out.println("\nProfessor Details:");
