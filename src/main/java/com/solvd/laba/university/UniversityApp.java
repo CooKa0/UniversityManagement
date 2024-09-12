@@ -387,89 +387,89 @@ public class UniversityApp {
             System.out.println(course.getCourseName() + " - Credits: " + course.getCredits());
         }
 
-            // Display and update professor details
-            System.out.println("\nProfessor Details:");
-            UniversityUtils.printMemberDetails(professor);
+        // Display and update professor details
+        System.out.println("\nProfessor Details:");
+        UniversityUtils.printMemberDetails(professor);
 
-            System.out.println("\nOriginal Professor Name: " + professor.getName());
-            System.out.println("Original Hire Date: " + professor.getHireDate());
+        System.out.println("\nOriginal Professor Name: " + professor.getName());
+        System.out.println("Original Hire Date: " + professor.getHireDate());
 
-            professor.setName("Dr. John Smith");
-            professor.setHireDate(LocalDate.of(2022, 8, 22));
+        professor.setName("Dr. John Smith");
+        professor.setHireDate(LocalDate.of(2022, 8, 22));
 
-            System.out.println("\nUpdated Professor Details:");
-            System.out.println(professor.getProfessorDetails(true));
-            System.out.println("Updated Professor Name: " + professor.getName());
-            System.out.println("Updated Hire Date: " + professor.getHireDate());
+        System.out.println("\nUpdated Professor Details:");
+        System.out.println(professor.getProfessorDetails(true));
+        System.out.println("Updated Professor Name: " + professor.getName());
+        System.out.println("Updated Hire Date: " + professor.getHireDate());
 
-            System.out.println("Professors:");
-            for (Professor prof : dept.getProfessors()) {
-                System.out.println(prof.getProfessorDetails(true));
-            }
-            // Override methods demonstration
-            System.out.println("\nToString Override:");
-            System.out.println(professor);
+        System.out.println("Professors:");
+        for (Professor prof : dept.getProfessors()) {
+            System.out.println(prof.getProfessorDetails(true));
+        }
+        // Override methods demonstration
+        System.out.println("\nToString Override:");
+        System.out.println(professor);
 
-            // Display and update student details and course registration
-            System.out.println("\nStudent Details:");
-            System.out.println("Original Name: " + student.getName());
-            System.out.println("Original Enrollment Date: " + student.getEnrollmentDate());
+        // Display and update student details and course registration
+        System.out.println("\nStudent Details:");
+        System.out.println("Original Name: " + student.getName());
+        System.out.println("Original Enrollment Date: " + student.getEnrollmentDate());
 
-            student.setName("Alice Johnson");
-            student.setEnrollmentDate(LocalDate.of(2024, 10, 1));
+        student.setName("Alice Johnson");
+        student.setEnrollmentDate(LocalDate.of(2024, 10, 1));
 
-            System.out.println("\nUpdated Student Details:");
-            System.out.println("Updated Name: " + student.getName());
-            System.out.println("Updated Enrollment Date: " + student.getEnrollmentDate());
+        System.out.println("\nUpdated Student Details:");
+        System.out.println("Updated Name: " + student.getName());
+        System.out.println("Updated Enrollment Date: " + student.getEnrollmentDate());
 
-            System.out.println("\nAll Students:");
-            for (Student s : university.getStudents()) {
-                System.out.println(s.getDetails());
-            }
-
-
-            // Display and update course details
-            System.out.println("\nCourse Details:");
-            System.out.println(javaCourse.getCourseDetails());
-
-            javaCourse.setCourseName("Advanced Java Programming");
-            javaCourse.setCredits(5);
-
-            System.out.println("\nUpdated Course Details:");
-            System.out.println(javaCourse.getCourseDetails());
-
-            // Display detailed and basic course representation
-            System.out.println("\nCourse Representation (Detailed):");
-            System.out.println(javaCourse.getCourseDetails(true));
-
-            System.out.println("\nCourse Representation (Basic):");
-            System.out.println(javaCourse.getCourseDetails(false));
-
-            // Print details of each worker
-            System.out.println("\nWorker Details:");
-            for (Worker worker : university.getWorkers()) {
-                System.out.println(worker.getDetails());
-            }
-
-            // Update and display worker details
-            System.out.println("\nUpdating Worker Details:");
-            janitor.setName("Johnathan Doe");
-            janitor.setHireDate(LocalDate.of(2019, 12, 15));
-            janitor.setDepartment("Facilities");
-
-            System.out.println("Updated Department: " + janitor.getDepartment());
-            System.out.println(janitor.getDetails());
+        System.out.println("\nAll Students:");
+        for (Student s : university.getStudents()) {
+            System.out.println(s.getDetails());
+        }
 
 
-            // Demonstrate overridden toString method
-            System.out.println("\nToString Override:");
-            System.out.println(janitor);
+        // Display and update course details
+        System.out.println("\nCourse Details:");
+        System.out.println(javaCourse.getCourseDetails());
 
-            System.out.println("\nComparing a Student and a Professor:");
-            UniversityUtils.compareMembers(student, professor);
+        javaCourse.setCourseName("Advanced Java Programming");
+        javaCourse.setCredits(5);
 
-            System.out.println("\nComparing Two Workers:");
-            UniversityUtils.compareMembers(janitor, librarian);
+        System.out.println("\nUpdated Course Details:");
+        System.out.println(javaCourse.getCourseDetails());
+
+        // Display detailed and basic course representation
+        System.out.println("\nCourse Representation (Detailed):");
+        System.out.println(javaCourse.getCourseDetails(true));
+
+        System.out.println("\nCourse Representation (Basic):");
+        System.out.println(javaCourse.getCourseDetails(false));
+
+        // Print details of each worker
+        System.out.println("\nWorker Details:");
+        for (Worker worker : university.getWorkers()) {
+            System.out.println(worker.getDetails());
+        }
+
+        // Update and display worker details
+        System.out.println("\nUpdating Worker Details:");
+        janitor.setName("Johnathan Doe");
+        janitor.setHireDate(LocalDate.of(2019, 12, 15));
+        janitor.setDepartment("Facilities");
+
+        System.out.println("Updated Department: " + janitor.getDepartment());
+        System.out.println(janitor.getDetails());
+
+
+        // Demonstrate overridden toString method
+        System.out.println("\nToString Override:");
+        System.out.println(janitor);
+
+        System.out.println("\nComparing a Student and a Professor:");
+        UniversityUtils.compareMembers(student, professor);
+
+        System.out.println("\nComparing Two Workers:");
+        UniversityUtils.compareMembers(janitor, librarian);
 
         }
         } catch (Exception e) {
