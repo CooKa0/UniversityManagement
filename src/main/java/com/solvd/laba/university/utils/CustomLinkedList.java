@@ -1,6 +1,9 @@
 package com.solvd.laba.university.utils;
 
-public class CustomLinkedList<T> {
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class CustomLinkedList<T> implements Iterable<T> {
     private Node<T> head;
     private int size;
 
@@ -66,5 +69,27 @@ public class CustomLinkedList<T> {
 
     public boolean isEmpty() {
         return size == 0;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private Node<T> current = head;
+
+            @Override
+            public boolean hasNext() {
+                return current != null;
+            }
+
+            @Override
+            public T next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                T data = current.data;
+                current = current.next;
+                return data;
+            }
+        };
     }
 }

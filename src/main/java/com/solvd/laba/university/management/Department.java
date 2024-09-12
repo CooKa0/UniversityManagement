@@ -3,6 +3,7 @@ package com.solvd.laba.university.management;
 import java.util.*;
 
 import com.solvd.laba.university.exceptions.CourseNotFoundException;
+import com.solvd.laba.university.exceptions.EventConflictException;
 import com.solvd.laba.university.exceptions.ProfessorLimitExceededException;
 import com.solvd.laba.university.personnel.Professor;
 import com.solvd.laba.university.utils.CustomLinkedList;
@@ -62,8 +63,13 @@ public class Department {
         return events;
     }
 
-    public void addEvent(Events event) {
-        getEvents().add(event);
+    public void addEvent(Events newEvent) throws EventConflictException {
+        for (Events event : getEvents()) {
+            if (event.conflictsWith(newEvent)) {
+                throw new EventConflictException("Event conflicts with existing event: " + event.getName());
+            }
+        }
+        getEvents().add(newEvent);
     }
 
     public void removeEvent(int index) {

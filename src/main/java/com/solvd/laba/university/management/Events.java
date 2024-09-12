@@ -37,6 +37,10 @@ public class Events {
         this.status = status;
     }
 
+    public boolean conflictsWith(Events otherEvent) {
+        return this.date.equals(otherEvent.date);
+    }
+
     @Override
     public String toString() {
         return "Events{Name='" + name + "', Date=" + date + ", Status='" + status + "'}";

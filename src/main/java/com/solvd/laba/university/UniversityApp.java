@@ -11,6 +11,7 @@ import com.solvd.laba.university.utils.FileUtil;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -36,14 +37,9 @@ public class UniversityApp {
         String universityName = scanner.nextLine();
 
         // Prompt the user to enter the founding date of the university
-        System.out.println("Enter the founding date of the university:");
-        System.out.print("Year: ");
-        int year = scanner.nextInt();
-        System.out.print("Month: ");
-        int month = scanner.nextInt();
-        System.out.print("Day: ");
-        int day = scanner.nextInt();
-        scanner.nextLine();
+        int year = getValidYear(scanner);
+        int month = getValidMonth(scanner);
+        int day = getValidDay(scanner, year, month);
 
         // Create the university with the provided data
         University university = new University(universityName, LocalDate.of(year, month, day));
@@ -539,5 +535,63 @@ public class UniversityApp {
         }
         logger.info("University app finished.");
 
+    }
+
+    private static int getValidYear(Scanner scanner) {
+        int year;
+        while (true) {
+            System.out.print("Enter the year of establishment: ");
+            try {
+                year = Integer.parseInt(scanner.nextLine());
+                if (year < 1000 || year > LocalDate.now().getYear()) {
+                    throw new NumberFormatException();
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid year. Please enter a valid 4-digit year.");
+            }
+        }
+        return year;
+    }
+
+    private static int getValidMonth(Scanner scanner) {
+        int month;
+        while (true) {
+            System.out.print("Enter the month of establishment (1-12): ");
+            try {
+                month = Integer.parseInt(scanner.nextLine());
+                if (month < 1 || month > 12) {
+                    throw new NumberFormatException();
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid month. Please enter a month between 1 and 12.");
+            }
+        }
+        return month;
+    }
+
+    private static int getValidDay(Scanner scanner, int year, int month) {
+        int day;
+        while (true) {
+            System.out.print("Enter the day of establishment (1-31): ");
+            try {
+                day = Integer.parseInt(scanner.nextLine());
+                if (day < 1 || day > 31) {
+                    throw new NumberFormatException("Day out of range (1-31).");
+                }
+                LocalDate date = LocalDate.of(year, month, 1);
+                int maxDay = date.lengthOfMonth();
+                if (day > maxDay) {
+                    throw new NumberFormatException("Invalid day for the specified month.");
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid day. Please enter a day between 1 and 31.");
+            } catch (DateTimeException e) {
+                System.out.println("Invalid date. Please ensure the day, month, and year are correct.");
+            }
+        }
+        return day;
     }
 }
