@@ -15,7 +15,7 @@ public class UniversityUtils {
 
         private static final Logger logger = LogManager.getLogger(UniversityUtils.class);
     private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
+        //can use switch statements too
         public static void printMemberDetails(UniversityMember member) {
             System.out.println("Member Details:");
             if (member instanceof Student) {
@@ -44,7 +44,7 @@ public class UniversityUtils {
             logger.info("Details of Member 2:");
             printSpecificDetails(member2);
         }
-
+        
         private static void printSpecificDetails(UniversityMember member) {
             if (member instanceof Student) {
                 Student student = (Student) member;
