@@ -7,6 +7,7 @@ import com.solvd.laba.university.facilities.*;
 import com.solvd.laba.university.assessment.*;
 import com.solvd.laba.university.utils.CustomLinkedList;
 import com.solvd.laba.university.utils.UniversityUtils;
+import com.solvd.laba.university.utils.FileUtil;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -22,6 +23,12 @@ public class UniversityApp {
     public static void main(String[] args) {
         UniversityConstants.printConstants();
         Scanner scanner = new Scanner(System.in);
+
+        // Define file paths
+        String universityInfoFile = "university_info.txt";
+        String studentsInfoFile = "students_info.txt";
+
+
         try {
 
         // Prompt the user to enter the university name
@@ -472,6 +479,61 @@ public class UniversityApp {
         UniversityUtils.compareMembers(janitor, librarian);
 
         }
+
+        // Write university information to file
+        StringBuilder universityInfoBuilder = new StringBuilder();
+        universityInfoBuilder.append("University Name: ").append(university.getName()).append("\n");
+        universityInfoBuilder.append("Established Date: ").append(university.getEstablishedDate()).append("\n");
+        universityInfoBuilder.append("Departments:\n");
+
+        for (Department dept : university.getDepartments()) {
+            universityInfoBuilder.append("  Department Name: ").append(dept.getDepartmentName()).append("\n");
+            universityInfoBuilder.append("  Courses:\n");
+            for (Course course : dept.getCourses().values()) {
+                universityInfoBuilder.append("    ").append(course.getCourseName()).append(" - Credits: ").append(course.getCredits()).append("\n");
+            }
+        }
+
+        try {
+            FileUtil.writeFile(universityInfoFile, universityInfoBuilder.toString());
+        } catch (Exception e) {
+            logger.error("Failed to write university information to file: {}", universityInfoFile, e);
+        }
+
+        // Write student information to file
+        StringBuilder studentsInfoBuilder = new StringBuilder();
+        studentsInfoBuilder.append("Students:\n");
+        for (Student s : university.getStudents()) {
+            studentsInfoBuilder.append(s.getDetails()).append("\n");
+        }
+
+        try {
+            FileUtil.writeFile(studentsInfoFile, studentsInfoBuilder.toString());
+        } catch (Exception e) {
+            logger.error("Failed to write student information to file: {}", studentsInfoFile, e);
+        }
+
+
+        // Read university information from file
+        String universityInfoFromFile;
+        try {
+            universityInfoFromFile = FileUtil.readFile(universityInfoFile);
+            System.out.println("University Information from File:");
+            System.out.println(universityInfoFromFile);
+        } catch (Exception e) {
+            logger.error("Failed to read university information from file.", e);
+        }
+
+        // Read student information from file
+        String studentsInfoFromFile;
+        try {
+            studentsInfoFromFile = FileUtil.readFile(studentsInfoFile);
+            System.out.println("Students Information from File:");
+            System.out.println(studentsInfoFromFile);
+        } catch (Exception e) {
+            logger.error("Failed to read student information from file.", e);
+        }
+
         } catch (Exception e) {
             logger.error("Error: ", e);
         }
