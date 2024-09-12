@@ -21,7 +21,7 @@ public class FileUtil {
             while ((line = reader.readLine()) != null) {
                 content.append(line).append(System.lineSeparator());
             }
-            logger.info("File read successfully.");
+            logger.info("File read successfully: {}", filePath);
         } catch (IOException e) {
             logger.error("Error reading file: " + filePath, e);
         }
