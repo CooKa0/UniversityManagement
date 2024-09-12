@@ -1,4 +1,4 @@
-package task1;
+package com.solvd.laba.university.task1;
 
 public class SortingAlgorithm {
     public static void insertionSort(long[] array) {
