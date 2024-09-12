@@ -7,15 +7,15 @@ import com.solvd.laba.university.facilities.*;
 import com.solvd.laba.university.assessment.*;
 import com.solvd.laba.university.utils.CustomLinkedList;
 import com.solvd.laba.university.utils.UniversityUtils;
-import java.util.logging.Logger;
-import java.util.logging.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.time.LocalDate;
 import java.util.Scanner;
 
 public class UniversityApp {
 
-    private static final Logger logger = Logger.getLogger(UniversityApp.class.getName());
+    private static final Logger logger = LogManager.getLogger(UniversityApp.class);
 
 
 
@@ -23,7 +23,6 @@ public class UniversityApp {
         UniversityConstants.printConstants();
         Scanner scanner = new Scanner(System.in);
         try {
-            LogManager.getLogManager().readConfiguration(UniversityApp.class.getResourceAsStream("/logging.properties"));
 
         // Prompt the user to enter the university name
         System.out.print("Enter the name of the university: ");
@@ -474,7 +473,7 @@ public class UniversityApp {
 
         }
         } catch (Exception e) {
-            logger.severe("Error: " + e.getMessage());
+            logger.error("Error: ", e);
         }
         logger.info("University app finished.");
 

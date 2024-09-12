@@ -23,9 +23,9 @@ com\solvd\laba\university\personnel\Professor.class
 com\solvd\laba\university\management\Course.class
 com\solvd\laba\university\management\Department.class
 com\solvd\laba\university\personnel\Student.class
+com\solvd\laba\university\task1\SortingAlgorithm.class
 com\solvd\laba\university\interfaces\Evaluatable.class
 com\solvd\laba\university\management\Events.class
 com\solvd\laba\university\personnel\UniversityMember.class
 com\solvd\laba\university\interfaces\Trackable.class
 com\solvd\laba\university\interfaces\EventOrganizable.class
-task1\SortingAlgorithm.class
