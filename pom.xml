@@ -90,4 +90,12 @@
 
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>local-repo</id>
+            <url>file://${project.basedir}/repository</url>
+        </repository>
+    </distributionManagement>
+
 </project>
