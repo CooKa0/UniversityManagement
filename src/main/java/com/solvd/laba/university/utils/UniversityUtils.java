@@ -44,24 +44,27 @@ public class UniversityUtils {
             logger.info("Details of Member 2:");
             printSpecificDetails(member2);
         }
-        
-        private static void printSpecificDetails(UniversityMember member) {
+
+        public static void printSpecificDetails(UniversityMember member) {
             if (member instanceof Student) {
                 Student student = (Student) member;
                 System.out.println("Name: " + StringUtils.defaultString(student.getName(), "Unknown"));
                 System.out.println("Role: " + StringUtils.defaultString(student.getRole(), "Unknown"));
                 System.out.println("Enrollment Date: " + formatDate(student.getEnrollmentDate()));
                 System.out.println("GPA: " + student.calculateGPA());
+                System.out.println("Trimmed Name: '" + StringUtils.trim(student.getName()) + "'");
             } else if (member instanceof Professor) {
                 Professor professor = (Professor) member;
                 System.out.println("Name: " + StringUtils.defaultString(professor.getName(), "Unknown"));
                 System.out.println("Role: " + StringUtils.defaultString(professor.getRole(), "Unknown"));
                 System.out.println("Hire Date: " + formatDate(professor.getHireDate()));
+                System.out.println("Reversed Role: " + StringUtils.reverse(professor.getRole()));
             } else if (member instanceof Worker) {
                 Worker worker = (Worker) member;
                 System.out.println("Name: " + StringUtils.defaultString(worker.getName(), "Unknown"));
                 System.out.println("Role: " + StringUtils.defaultString(worker.getRole(), "Unknown"));
                 System.out.println("Hire Date: " + formatDate(worker.getHireDate()));
+                System.out.println("Name Length: " + StringUtils.length(worker.getName()));
             } else {
                 System.out.println("Name: " + StringUtils.defaultString(member.getName(), "Unknown"));
                 System.out.println("Role: " + StringUtils.defaultString(member.getRole(), "Unknown"));
