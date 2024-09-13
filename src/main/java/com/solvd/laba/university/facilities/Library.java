@@ -1,5 +1,6 @@
 package com.solvd.laba.university.facilities;
 
+import com.solvd.laba.university.exceptions.InvalidBookCountException;
 import com.solvd.laba.university.exceptions.LibraryFullException;
 
 import java.util.ArrayList;
@@ -43,6 +44,9 @@ public class Library {
 
     // Removes a book from the current library and updates the global book count
     public void removeBook(Books book) {
+        if (bookCount <= 0) {
+            throw new InvalidBookCountException("Cannot remove a book. The library is empty.");
+        }
         if (booksList.remove(book)) {
             bookCount--;
             totalBooksAcrossAllLibraries--;
