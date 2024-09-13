@@ -5,8 +5,7 @@ import com.solvd.laba.university.management.Course;
 import com.solvd.laba.university.utils.CustomLinkedList;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.ArrayList;
+
 
 
 public class Professor extends UniversityMember implements Manageable {
@@ -18,7 +17,7 @@ public class Professor extends UniversityMember implements Manageable {
 
     private CustomLinkedList<Course> getManagedCoursesList() {
         if (managedCourses == null) {
-            managedCourses = new CustomLinkedList<>(); // Initialize when accessed
+            managedCourses = new CustomLinkedList<>();
         }
         return managedCourses;
     }
