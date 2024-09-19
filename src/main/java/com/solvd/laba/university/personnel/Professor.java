@@ -2,24 +2,16 @@ package com.solvd.laba.university.personnel;
 
 import com.solvd.laba.university.interfaces.Manageable;
 import com.solvd.laba.university.management.Course;
-import com.solvd.laba.university.utils.CustomLinkedList;
+import com.solvd.laba.university.management.Department;
 
 import java.time.LocalDate;
 
-
-
 public class Professor extends UniversityMember implements Manageable {
-    private CustomLinkedList<Course> managedCourses;
+    private Department department;
 
-    public Professor(String name, LocalDate hireDate) {
+    public Professor(String name, LocalDate hireDate, Department department) {
         super(name, hireDate);
-    }
-
-    private CustomLinkedList<Course> getManagedCoursesList() {
-        if (managedCourses == null) {
-            managedCourses = new CustomLinkedList<>();
-        }
-        return managedCourses;
+        this.department = department;
     }
 
     @Override
@@ -32,6 +24,15 @@ public class Professor extends UniversityMember implements Manageable {
         return "Professor: " + name + ", Hired on: " + hireDate;
     }
 
+    @Override
+    public String getManagementDetails() {
+        StringBuilder details = new StringBuilder("Managed Courses:\n");
+        for (Course course : department.getCourses().values()) {
+            details.append(course.getCourseDetails(true)).append("\n");
+        }
+        return details.toString();
+    }
+
     public String getProfessorDetails(boolean includeHireDate) {
         if (includeHireDate) {
             return "Professor Name: " + name + ", Hire Date: " + hireDate;
@@ -40,49 +41,23 @@ public class Professor extends UniversityMember implements Manageable {
         }
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
+    public void addCourse(Course course) {
+        department.addCourse(course);
+        System.out.println("Course " + course.getCourseName() + " added by " + name);
     }
 
-    @Override
-    public int hashCode() {
-        return super.hashCode();
+    public void removeCourse(String courseName) {
+        department.getCourses().remove(courseName);
+        System.out.println("Course " + courseName + " removed by " + name);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public void listCourses() {
+        System.out.println("Courses in " + department.getDepartmentName() + ":");
+        System.out.println(department.listCourses());
     }
 
     @Override
     public void manage() {
-        System.out.println("Managing the following courses:");
-        for (int i = 0; i < getManagedCoursesList().size(); i++) {
-            Course course = getManagedCoursesList().get(i);
-            System.out.println(course.getCourseDetails(true));
-        }
-    }
-
-    @Override
-    public String getManagementDetails() {
-        StringBuilder details = new StringBuilder("Managed Courses:\n");
-        for (int i = 0; i < getManagedCoursesList().size(); i++) {
-            Course course = getManagedCoursesList().get(i);
-            details.append(course.getCourseDetails(true)).append("\n");
-        }
-        return details.toString();
-    }
-
-    public void addManagedCourse(Course course) {
-        getManagedCoursesList().add(course);
-    }
-
-    public void removeManagedCourse(int index) {
-        getManagedCoursesList().remove(index);
-    }
-
-    public CustomLinkedList<Course> getManagedCourses() {
-        return getManagedCoursesList();
+        System.out.println(getManagementDetails());
     }
 }

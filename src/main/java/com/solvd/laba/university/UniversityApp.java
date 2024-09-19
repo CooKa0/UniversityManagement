@@ -103,29 +103,26 @@ public class UniversityApp {
             System.out.println("GPA: " + student.calculateGPA());
 
             // Create professor
-            Professor professor = new Professor("Dr. Smith", LocalDate.of(2020, 5, 10));
-                try {
-                    csDepartment.addProfessor(professor);
-                } catch (ProfessorLimitExceededException e) {
-                    System.err.println(e.getMessage());
-                }
+            Professor professor = new Professor("Dr. Smith", LocalDate.of(2020, 5, 10), csDepartment);
+            try {
+                csDepartment.addProfessor(professor);
+            } catch (ProfessorLimitExceededException e) {
+                System.err.println(e.getMessage());
+            }
 
             // Initialize managed courses for the professor
             Course courseToManage = csDepartment.findCourseByName("Java Programming");
-                if (courseToManage != null) {
-                    professor.addManagedCourse(courseToManage);
-                }
+            if (courseToManage != null) {
+                professor.addCourse(courseToManage);
+            }
 
             // Demonstrate professor managing courses
-            System.out.println("\nProfessor's Managed Courses:");
-                for (int i = 0; i < professor.getManagedCourses().size(); i++) {
-                    Course course = professor.getManagedCourses().get(i);
-                    System.out.println(course.getCourseDetails(true));
-            }
+            System.out.println("\nCourses managed by the Professor:");
+            professor.listCourses();
 
             // Display professor management details
             System.out.println("\nProfessor Management Details:");
-            System.out.println(professor.getManagementDetails());
+            professor.manage();
 
             // Create classroom, library
             Classroom classroom = new Classroom("A101", 30);
@@ -208,6 +205,14 @@ public class UniversityApp {
             csDepartment.addEvent(event1);
             csDepartment.addEvent(event2);
 
+            // Display events in the department
+            System.out.println("\nEvents in the Department:");
+            CustomLinkedList<Events> eventsList = csDepartment.getEvents();
+            for (int i = 0; i < eventsList.size(); i++) {
+                Events event = eventsList.get(i);
+                System.out.println(event);
+            }
+
             System.out.println("\nTotal Events in the Department: " + csDepartment.getEventCount());
             System.out.println("Are there any events? " + (csDepartment.areEventsEmpty() ? "No" : "Yes"));
 
@@ -224,14 +229,6 @@ public class UniversityApp {
             newEvents.add(new Events("New Faculty Orientation", LocalDate.of(2024, 8, 15), "Scheduled"));
             newEvents.add(new Events("Final Exam Review", LocalDate.of(2024, 12, 10), "Scheduled"));
 
-
-            // Display events in the department
-            System.out.println("\nEvents in the Department:");
-            CustomLinkedList<Events> eventsList = csDepartment.getEvents();
-                for (int i = 0; i < eventsList.size(); i++) {
-                Events event = eventsList.get(i);
-                System.out.println(event);
-            }
 
             // Demonstrate event management
             System.out.println("\nDemonstrating Event Management by Worker:");
