@@ -63,9 +63,22 @@ public class Department {
         return events;
     }
 
+    public int getEventCount() {
+        return getEvents().size();
+    }
+
+    public boolean areEventsEmpty() {
+        return getEvents().isEmpty();
+    }
+
+    public void clearEvents() {
+        getEvents().clear();
+    }
+
     public void addEvent(Events newEvent) throws EventConflictException {
-        for (Events event : getEvents()) {
-            if (event.conflictsWith(newEvent)) {
+        Events[] eventsArray = getEvents().toArray(new Events[0]);
+        for (Events event : eventsArray) {
+            if (event != null && event.conflictsWith(newEvent)) {
                 throw new EventConflictException("Event conflicts with existing event: " + event.getName());
             }
         }

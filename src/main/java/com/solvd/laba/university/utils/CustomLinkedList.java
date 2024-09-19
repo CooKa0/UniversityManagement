@@ -1,9 +1,8 @@
 package com.solvd.laba.university.utils;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.Collection;
 
-public class CustomLinkedList<T> implements Iterable<T> {
+public class CustomLinkedList<T> {
     private Node<T> head;
     private int size;
 
@@ -71,25 +70,84 @@ public class CustomLinkedList<T> implements Iterable<T> {
         return size == 0;
     }
 
-    @Override
-    public Iterator<T> iterator() {
-        return new Iterator<T>() {
-            private Node<T> current = head;
-
-            @Override
-            public boolean hasNext() {
-                return current != null;
+    public boolean contains(T data) {
+        Node<T> current = head;
+        while (current != null) {
+            if (current.data.equals(data)) {
+                return true;
             }
+            current = current.next;
+        }
+        return false;
+    }
 
-            @Override
-            public T next() {
-                if (!hasNext()) {
-                    throw new NoSuchElementException();
-                }
-                T data = current.data;
-                current = current.next;
-                return data;
+    public void clear() {
+        head = null;
+        size = 0;
+    }
+
+    public boolean addAll(Collection<? extends T> collection) {
+        boolean modified = false;
+        for (T element : collection) {
+            add(element);
+            modified = true;
+        }
+        return modified;
+    }
+
+    public boolean remove(Object o) {
+        if (head == null) {
+            return false;
+        }
+        if (head.data.equals(o)) {
+            head = head.next;
+            size--;
+            return true;
+        }
+        Node<T> current = head;
+        while (current.next != null) {
+            if (current.next.data.equals(o)) {
+                current.next = current.next.next;
+                size--;
+                return true;
             }
-        };
+            current = current.next;
+        }
+        return false;
+    }
+
+    public boolean removeAll(Collection<?> c) {
+        boolean modified = false;
+        for (Object element : c) {
+            while (remove(element)) {
+                modified = true;
+            }
+        }
+        return modified;
+    }
+
+    public boolean containsAll(Collection<?> c) {
+        for (Object element : c) {
+            if (!contains((T) element)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public T[] toArray(T[] a) {
+        if (a.length < size) {
+            return (T[]) java.util.Arrays.copyOf(a, size);
+        }
+
+        Node<T> current = head;
+        for (int i = 0; i < size; i++) {
+            a[i] = current.data;
+            current = current.next;
+        }
+        if (a.length > size) {
+            a[size] = null;
+        }
+        return a;
     }
 }

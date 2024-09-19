@@ -11,7 +11,6 @@ import com.solvd.laba.university.utils.FileUtil;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
-import java.io.File;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -208,6 +207,23 @@ public class UniversityApp {
             // Add events to the department
             csDepartment.addEvent(event1);
             csDepartment.addEvent(event2);
+
+            System.out.println("\nTotal Events in the Department: " + csDepartment.getEventCount());
+            System.out.println("Are there any events? " + (csDepartment.areEventsEmpty() ? "No" : "Yes"));
+
+            // Clear events
+            System.out.print("Do you want to clear all events? (yes/no): ");
+            String clearEventsResponse = scanner.nextLine();
+            if (clearEventsResponse.equalsIgnoreCase("yes")) {
+                csDepartment.clearEvents();
+                System.out.println("All events have been cleared.");
+            }
+
+            // Adding a collection of events
+            CustomLinkedList<Events> newEvents = new CustomLinkedList<>();
+            newEvents.add(new Events("New Faculty Orientation", LocalDate.of(2024, 8, 15), "Scheduled"));
+            newEvents.add(new Events("Final Exam Review", LocalDate.of(2024, 12, 10), "Scheduled"));
+
 
             // Display events in the department
             System.out.println("\nEvents in the Department:");
