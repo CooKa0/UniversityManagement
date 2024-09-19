@@ -53,18 +53,21 @@ public class UniversityUtils {
                 System.out.println("Enrollment Date: " + formatDate(student.getEnrollmentDate()));
                 System.out.println("GPA: " + student.calculateGPA());
                 System.out.println("Trimmed Name: '" + StringUtils.trim(student.getName()) + "'");
+                System.out.println("Uppercase Name: " + StringUtils.upperCase(student.getName()));
             } else if (member instanceof Professor) {
                 Professor professor = (Professor) member;
                 System.out.println("Name: " + StringUtils.defaultString(professor.getName(), "Unknown"));
                 System.out.println("Role: " + StringUtils.defaultString(professor.getRole(), "Unknown"));
                 System.out.println("Hire Date: " + formatDate(professor.getHireDate()));
                 System.out.println("Reversed Role: " + StringUtils.reverse(professor.getRole()));
+                System.out.println("Is Name Empty: " + StringUtils.isEmpty(professor.getName()));
             } else if (member instanceof Worker) {
                 Worker worker = (Worker) member;
                 System.out.println("Name: " + StringUtils.defaultString(worker.getName(), "Unknown"));
                 System.out.println("Role: " + StringUtils.defaultString(worker.getRole(), "Unknown"));
                 System.out.println("Hire Date: " + formatDate(worker.getHireDate()));
                 System.out.println("Name Length: " + StringUtils.length(worker.getName()));
+                System.out.println("Lowercase Name: " + StringUtils.lowerCase(worker.getName()));
             } else {
                 System.out.println("Name: " + StringUtils.defaultString(member.getName(), "Unknown"));
                 System.out.println("Role: " + StringUtils.defaultString(member.getRole(), "Unknown"));
