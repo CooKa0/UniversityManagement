@@ -1,16 +1,20 @@
 package com.solvd.laba.university.facilities;
 
+import com.solvd.laba.university.enums.BookGenre;
+
 public class Books {
     private String title;
     private String author;
     private int yearPublished;
     private boolean isAvailable;
+    private BookGenre genre;
 
-    public Books(String title, String author, int yearPublished) {
+    public Books(String title, String author, int yearPublished, BookGenre genre) {
         this.title = title;
         this.author = author;
         this.yearPublished = yearPublished;
         this.isAvailable = true;
+        this.genre = genre;
     }
 
     public String getTitle() {
@@ -46,8 +50,13 @@ public class Books {
         isAvailable = available;
     }
 
+
+    public BookGenre getGenre() {
+        return genre;
+    }
+
     public String getBookDetails() {
-        return "Title: " + title + ", Author: " + author + ", Year Published: " + yearPublished + ", Available: " + isAvailable;
+        return "Title: " + title + ", Author: " + author + ", Year Published: " + yearPublished + ", Available: " + isAvailable + ", Genre: " + genre.getGenreDescription();
     }
 
     @Override
@@ -57,6 +66,7 @@ public class Books {
                 ", author='" + author + '\'' +
                 ", yearPublished=" + yearPublished +
                 ", isAvailable=" + isAvailable +
+                ", genre=" + genre.getGenreDescription() +
                 '}';
     }
 }

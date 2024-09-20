@@ -1,11 +1,13 @@
 package com.solvd.laba.university.personnel;
 
+import com.solvd.laba.university.enums.Currency;
 import com.solvd.laba.university.interfaces.Evaluatable;
 import com.solvd.laba.university.interfaces.Identifiable;
 import com.solvd.laba.university.interfaces.Trackable;
 import com.solvd.laba.university.management.Course;
 import com.solvd.laba.university.assessment.Assignment;
 import com.solvd.laba.university.assessment.Exam;
+import com.solvd.laba.university.utils.CurrencyUtil;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ public class Student extends UniversityMember implements Evaluatable, Trackable,
     private List<Course> registeredCourses;
     private String id;
     private String progressReport;
+    private double scholarshipAmount;
 
     public Student(String name, LocalDate enrollmentDate) {
         super(name);
@@ -126,9 +129,30 @@ public class Student extends UniversityMember implements Evaluatable, Trackable,
         return getRegisteredCourses();
     }
 
+    public double getScholarshipAmount() {
+        return scholarshipAmount;
+    }
+
+    public void setScholarshipAmount(double amount) {
+        this.scholarshipAmount = amount;
+    }
+
+    public String convertAndFormatScholarship(Currency targetCurrency) {
+        // Log the conversion
+        Currency fromCurrency = Currency.PLN;
+        CurrencyUtil.logCurrencyConversion(scholarshipAmount, fromCurrency, targetCurrency);
+
+        // Convert and format the scholarship amount
+        double convertedAmount = CurrencyUtil.convertToCurrency.apply(scholarshipAmount, targetCurrency);
+        String formattedAmount = CurrencyUtil.customFormatter().apply(convertedAmount);
+
+        return formattedAmount + " " + targetCurrency;
+    }
+
+
     @Override
     public void evaluate() {
-        System.out.println("Evaluating student performance...");
+        System.out.println("\nEvaluating student performance...");
         double averageAssignmentScore = getAssignments().stream().mapToDouble(Assignment::getScore).average().orElse(0);
         double averageExamScore = getExams().stream().mapToDouble(Exam::getScore).average().orElse(0);
         double overallPerformance = (averageAssignmentScore + averageExamScore) / 2;

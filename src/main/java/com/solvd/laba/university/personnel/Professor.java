@@ -3,25 +3,30 @@ package com.solvd.laba.university.personnel;
 import com.solvd.laba.university.interfaces.Manageable;
 import com.solvd.laba.university.management.Course;
 import com.solvd.laba.university.management.Department;
+import com.solvd.laba.university.enums.ProfessorLevel;
+import com.solvd.laba.university.utils.UniversityUtils;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 public class Professor extends UniversityMember implements Manageable {
     private Department department;
+    private ProfessorLevel level;
 
-    public Professor(String name, LocalDate hireDate, Department department) {
+    public Professor(String name, LocalDate hireDate, Department department, ProfessorLevel level) {
         super(name, hireDate);
         this.department = department;
+        this.level = level;
     }
 
     @Override
     public String getRole() {
-        return "Professor";
+        return "Professor (" + level.getLevelDescription() + ")";
     }
 
     @Override
     public String getDetails() {
-        return "Professor: " + name + ", Hired on: " + hireDate;
+        return "Professor: " + name + ", Level: " + level.getLevelDescription() + ", Hired on: " + hireDate;
     }
 
     @Override
@@ -39,6 +44,11 @@ public class Professor extends UniversityMember implements Manageable {
         } else {
             return "Professor Name: " + name;
         }
+    }
+
+    public static void printProfessorLevels() {
+        System.out.println("\nAvailable Professor Levels:");
+        Arrays.stream(ProfessorLevel.values()).forEach(UniversityUtils.printProfessorLevelDetails);
     }
 
     public void addCourse(Course course) {

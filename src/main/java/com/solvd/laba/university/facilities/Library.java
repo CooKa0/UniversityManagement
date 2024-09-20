@@ -2,6 +2,7 @@ package com.solvd.laba.university.facilities;
 
 import com.solvd.laba.university.exceptions.InvalidBookCountException;
 import com.solvd.laba.university.exceptions.LibraryFullException;
+import com.solvd.laba.university.enums.BookGenre;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,8 @@ public class Library {
         if (initialBookCount > 0) {
             this.booksList = new ArrayList<>();
             for (int i = 0; i < initialBookCount; i++) {
-                booksList.add(new Books("Book" + (i + 1), "Author" + (i + 1), 2020 + (i % 5)));
+                BookGenre genre = BookGenre.values()[i % BookGenre.values().length];
+                booksList.add(new Books("Book" + (i + 1), "Author" + (i + 1), 2020 + (i % 5), genre));
             }
         }
         totalBooksAcrossAllLibraries += initialBookCount;

@@ -1,5 +1,8 @@
 package com.solvd.laba.university.utils;
 
+import com.solvd.laba.university.enums.BookGenre;
+import com.solvd.laba.university.enums.CourseLevel;
+import com.solvd.laba.university.enums.ProfessorLevel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.commons.lang3.StringUtils;
@@ -7,9 +10,16 @@ import com.solvd.laba.university.personnel.Student;
 import com.solvd.laba.university.personnel.Professor;
 import com.solvd.laba.university.personnel.Worker;
 import com.solvd.laba.university.personnel.UniversityMember;
+import com.solvd.laba.university.facilities.Classroom;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class UniversityUtils {
 
@@ -76,5 +86,32 @@ public class UniversityUtils {
 
         private static String formatDate(LocalDate date) {
             return (date != null) ? date.format(dateFormatter) : "Unknown";
+        }
+
+        // Predicate to check if a genre is academic
+        public static Predicate<BookGenre> isAcademicGenre = genre -> genre.isAcademic();
+
+        // Lambda for calculating average salary
+        public static Function<Worker[], Double> calculateAverageSalary = workers -> {
+            return Arrays.stream(workers)
+                    .map(Worker::calculateSalary)
+                    .mapToDouble(Double::doubleValue)
+                    .average()
+                    .orElse(0.0);
+        };
+
+        // Supplier for Course Levels
+        public static Supplier<List<CourseLevel>> getCourseLevels = () -> Arrays.asList(CourseLevel.values());
+
+        // Consumer for Professor Levels
+        public static Consumer<ProfessorLevel> printProfessorLevelDetails = level -> {
+            System.out.println(level.getDetails());
+        };
+
+        // Custom lambda function for filtering classrooms based on a capacity threshold
+        public static <T extends Classroom> Function<List<T>, List<T>> filterByCapacity(int capacityThreshold) {
+            return classrooms -> classrooms.stream()
+                    .filter(classroom -> classroom.getCapacity() <= capacityThreshold)
+                    .toList();
         }
     }

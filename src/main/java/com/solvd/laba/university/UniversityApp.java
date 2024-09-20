@@ -1,5 +1,6 @@
 package com.solvd.laba.university;
 
+import com.solvd.laba.university.enums.*;
 import com.solvd.laba.university.exceptions.ProfessorLimitExceededException;
 import com.solvd.laba.university.management.*;
 import com.solvd.laba.university.personnel.*;
@@ -13,7 +14,11 @@ import org.apache.logging.log4j.LogManager;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+
+import static com.solvd.laba.university.enums.WorkerRole.*;
 
 public class UniversityApp {
 
@@ -54,9 +59,10 @@ public class UniversityApp {
             // Create department
             Department csDepartment = new Department("Computer Science");
 
+
             // Create courses
-            Course javaCourse = new Course("Java Programming", 4);
-            Course dataStructuresCourse = new Course("Data Structures", 3);
+            Course javaCourse = new Course("Java Programming", 4, CourseLevel.UNDERGRADUATE);
+            Course dataStructuresCourse = new Course("Data Structures", 3, CourseLevel.UNDERGRADUATE);
             csDepartment.addCourse(javaCourse);
             csDepartment.addCourse(dataStructuresCourse);
 
@@ -90,8 +96,8 @@ public class UniversityApp {
                     System.out.println("Course 'Data Structures' not found!");
                 }
 
-                // Display registered courses
-                System.out.println("\nRegistered Courses:");
+            // Display registered courses
+            System.out.println("\nRegistered Courses:");
                 for (Course course : student.getRegisteredCoursesList()) {
                     System.out.println(course.getCourseName() + " - Status: Registered");
                 }
@@ -102,8 +108,19 @@ public class UniversityApp {
             System.out.println("\nStudent GPA:");
             System.out.println("GPA: " + student.calculateGPA());
 
+            // Add scholarship and convert currency
+            student.setScholarshipAmount(1000.0);
+
+
+            Currency targetCurrency = Currency.EUR;
+            String formattedScholarship = student.convertAndFormatScholarship(targetCurrency);
+
+            System.out.println("Converted scholarship: " + formattedScholarship);
+
+
+
             // Create professor
-            Professor professor = new Professor("Dr. Smith", LocalDate.of(2020, 5, 10), csDepartment);
+            Professor professor = new Professor("Dr. Smith", LocalDate.of(2020, 5, 10), csDepartment, ProfessorLevel.FULL);
             try {
                 csDepartment.addProfessor(professor);
             } catch (ProfessorLimitExceededException e) {
@@ -135,12 +152,19 @@ public class UniversityApp {
 
 
             // Create new books
-            Books book1 = new Books("Introduction to Algorithms", "Thomas H. Cormen", 2009);
-            Books book2 = new Books("Clean Code", "Robert C. Martin", 2008);
+            Books book1 = new Books("Introduction to Algorithms", "Thomas H. Cormen", 2009, BookGenre.TEXTBOOK);
+            Books book2 = new Books("Clean Code", "Robert C. Martin", 2008, BookGenre.PROFESSIONAL_DEVELOPMENT);
 
             // Add books to libraries
             library1.addBook(book1);
             library1.addBook(book2);
+
+            // Check if genres are academic
+            for (BookGenre genre : BookGenre.values()) {
+                if (UniversityUtils.isAcademicGenre.test(genre)) {
+                    System.out.println(genre.getGenreDescription() + " is an academic genre.");
+                }
+            }
 
 
             // Create an assignment and an exam
@@ -174,10 +198,11 @@ public class UniversityApp {
             System.out.println("\nStudent ID:");
             System.out.println(student.getId());
 
+
             // Create workers
-            Worker janitor = new Worker("John Doe", LocalDate.of(2020, 6, 1), "Maintenance", 2000.00, 200.00, 15.00, 160);
-            Worker librarian = new Worker("Jane Smith", LocalDate.of(2018, 3, 15), "Library Services", 2500.00, 300.00, 20.00, 140);
-            Worker securityGuard = new Worker("Alex Johnson", LocalDate.of(2021, 11, 1), "Security", 2200.00, 250.00, 18.00, 150);
+            Worker janitor = new Worker("John Doe", LocalDate.of(2020, 6, 1), "Maintenance", 2000.00, 200.00, 15.00, 160, MAINTENANCE);
+            Worker librarian = new Worker("Jane Smith", LocalDate.of(2018, 3, 15), "Library Services", 2500.00, 300.00, 20.00, 140, ADMINISTRATIVE);
+            Worker securityGuard = new Worker("Alex Johnson", LocalDate.of(2021, 11, 1), "Security", 2200.00, 250.00, 18.00, 150, TECHNICAL);
 
             // Set IDs for workers
             janitor.setId("W001");
@@ -196,6 +221,10 @@ public class UniversityApp {
                 System.out.println("Worker ID: " + worker.getId());
                 System.out.println("Monthly Salary: " + worker.calculateSalary());
             }
+
+            // Calculate and display average salary
+            double averageSalary = UniversityUtils.calculateAverageSalary.apply(university.getWorkers());
+            System.out.println("Average Salary of Workers: " + averageSalary);
 
             // Create events
             Events event1 = new Events("Annual Tech Conference", LocalDate.of(2024, 9, 20), "Scheduled");
@@ -300,6 +329,14 @@ public class UniversityApp {
                 System.out.println(cls.getClassroomInfo());
             }
 
+            // Filter classrooms based on capacity
+            List<Classroom> classroomList = Arrays.asList(university.getClassrooms());
+            List<Classroom> filteredClassrooms = UniversityUtils.filterByCapacity(30).apply(classroomList);
+            System.out.println("\nFiltered Classrooms (Capacity <= 30):");
+            for (Classroom cls : filteredClassrooms) {
+                System.out.println(cls.getClassroomInfo());
+            }
+
             // Display library information
             System.out.println("\nLibraries:");
             for (Library lib : university.getLibraries()) {
@@ -313,7 +350,7 @@ public class UniversityApp {
             library2.setLibraryName("Updated Science Library");
 
             // Create new books
-            Books newBook = new Books("Effective Java", "Joshua Bloch", 2018);
+            Books newBook = new Books("Effective Java", "Joshua Bloch", 2018, BookGenre.TEXTBOOK);
 
             // Adding Books with Details
             System.out.println("\nAdding book: " + newBook.getBookDetails());
@@ -489,6 +526,7 @@ public class UniversityApp {
             UniversityUtils.compareMembers(janitor, librarian);
 
             }
+
 
             // Write university information to file
             StringBuilder universityInfoBuilder = new StringBuilder();

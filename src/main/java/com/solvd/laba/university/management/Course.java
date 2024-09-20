@@ -1,13 +1,17 @@
 package com.solvd.laba.university.management;
 
+import com.solvd.laba.university.enums.CourseLevel;
+import com.solvd.laba.university.utils.UniversityUtils;
+
 public class Course {
     private String courseName;
     private int credits;
     private double grade;
+    private CourseLevel level;
 
     public static final int MAX_COURSE_CREDITS = 5;
 
-    public Course(String courseName, int credits) {
+    public Course(String courseName, int credits, CourseLevel level) {
         this.courseName = courseName;
 //        this.credits = credits;
         if (credits <= MAX_COURSE_CREDITS) {
@@ -15,6 +19,7 @@ public class Course {
         } else {
             throw new IllegalArgumentException("Course credits cannot exceed " + MAX_COURSE_CREDITS);
         }
+        this.level = level;
     }
 
     public String getCourseName() {
@@ -41,16 +46,25 @@ public class Course {
         this.grade = grade;
     }
 
+    public CourseLevel getLevel() {
+        return level;
+    }
+
     public String getCourseDetails() {
-        return "Course Name: " + courseName + ", Credits: " + credits + ", Grade: " + grade;
+        return "Course Name: " + courseName + ", Credits: " + credits + ", Grade: " + grade + ", Level: " + level.getLevelDescription();
     }
 
     public String getCourseDetails(boolean detailed) {
         if (detailed) {
-            return "Course Name: " + courseName + ", Credits: " + credits;
+            return "Course Name: " + courseName + ", Credits: " + credits + ", Level: " + level.getLevelDescription();
         } else {
             return "Course Name: " + courseName;
         }
+    }
+
+    public static void printCourseLevels() {
+        System.out.println("\nAvailable Course Levels:");
+        UniversityUtils.getCourseLevels.get().forEach(level -> System.out.println(level.getLevelDescription()));
     }
 
     @Override
@@ -59,6 +73,7 @@ public class Course {
                 "courseName='" + courseName + '\'' +
                 ", credits=" + credits +
                 ", grade=" + grade +
+                ", level=" + level.getLevelDescription() +
                 '}';
     }
 

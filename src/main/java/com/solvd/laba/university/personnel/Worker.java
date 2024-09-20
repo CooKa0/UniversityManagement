@@ -3,10 +3,14 @@ package com.solvd.laba.university.personnel;
 import com.solvd.laba.university.interfaces.EventOrganizable;
 import com.solvd.laba.university.interfaces.Identifiable;
 import com.solvd.laba.university.management.Events;
+import com.solvd.laba.university.enums.WorkerRole;
+import com.solvd.laba.university.utils.CurrencyUtil;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 public class Worker extends UniversityMember implements EventOrganizable, Identifiable  {
     private String department;
@@ -19,14 +23,16 @@ public class Worker extends UniversityMember implements EventOrganizable, Identi
     private int hoursWorked;
     private static final int STANDARD_WORK_HOURS = 160;
     private static final double OVERTIME_MULTIPLIER = 1.5;
+    private WorkerRole role;
 
-    public Worker(String name, LocalDate hireDate, String department, double baseSalary, double bonus, double hourlyRate, int hoursWorked) {
+    public Worker(String name, LocalDate hireDate, String department, double baseSalary, double bonus, double hourlyRate, int hoursWorked, WorkerRole role) {
         super(name, hireDate);
         this.department = department;
         this.baseSalary = baseSalary;
         this.bonus = bonus;
         this.hourlyRate = hourlyRate;
         this.hoursWorked = hoursWorked;
+        this.role = role;
     }
 
     private List<Events> getOrCreateEvents() {
@@ -50,14 +56,15 @@ public class Worker extends UniversityMember implements EventOrganizable, Identi
         return  totalSalary;
     }
 
+
     @Override
     public String getRole() {
-        return "Worker";
+        return role.name();
     }
 
     @Override
     public String getDetails() {
-        return "Worker: " + name + ", Department: " + department + ", Hired on: " + hireDate;
+        return "Worker: " + name + ", Department: " + department + ", Role: " + role + ", Hired on: " + hireDate;
     }
 
     public void setDepartment(String department) {
@@ -70,7 +77,7 @@ public class Worker extends UniversityMember implements EventOrganizable, Identi
 
     @Override
     public String toString() {
-        return super.toString() + ", Department: " + department;
+        return super.toString() + ", Department: " + department + ", Role: " + role;
     }
 
     @Override
