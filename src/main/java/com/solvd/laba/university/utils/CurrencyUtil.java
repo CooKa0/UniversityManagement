@@ -8,10 +8,8 @@ import java.util.function.Function;
 public class CurrencyUtil {
 
     // Lambda for converting currency
-    public static BiFunction<Double, Currency, Double> convertToCurrency = (amount, currency) -> {
-        return Currency.PLN.convertTo(currency, amount);
-    };
-    
+    public static BiFunction<Double, Currency, Double> convertToCurrency = (amount, currency) ->
+            Currency.PLN.convertTo(currency, amount);
 
     // Custom lambda function with generics for logging
     public static <T> void logCurrencyConversion(T amount, Currency from, Currency to) {

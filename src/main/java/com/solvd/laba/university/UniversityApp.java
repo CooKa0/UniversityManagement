@@ -59,6 +59,10 @@ public class UniversityApp {
             // Create department
             Department csDepartment = new Department("Computer Science");
 
+            //test
+            System.out.println("Course Levels:");
+            UniversityUtils.getCourseLevels.get().forEach(level -> System.out.println(level.getLevelDescription()));
+
 
             // Create courses
             Course javaCourse = new Course("Java Programming", 4, CourseLevel.UNDERGRADUATE);
@@ -118,6 +122,10 @@ public class UniversityApp {
             System.out.println("Converted scholarship: " + formattedScholarship);
 
 
+            // Test the Consumer
+            System.out.println("\nProfessor Levels:");
+            UniversityUtils.printProfessorLevelDetails.accept(ProfessorLevel.FULL);
+            UniversityUtils.printProfessorLevelDetails.accept(ProfessorLevel.ASSISTANT);
 
             // Create professor
             Professor professor = new Professor("Dr. Smith", LocalDate.of(2020, 5, 10), csDepartment, ProfessorLevel.FULL);
