@@ -122,6 +122,7 @@ public class UniversityApp {
             System.out.println("Converted scholarship: " + formattedScholarship);
 
 
+
             // Test the Consumer
             System.out.println("\nProfessor Levels:");
             UniversityUtils.printProfessorLevelDetails.accept(ProfessorLevel.FULL);
