@@ -1,7 +1,6 @@
 package com.solvd.laba.university.management;
 
 import com.solvd.laba.university.enums.CourseLevel;
-import com.solvd.laba.university.utils.UniversityUtils;
 
 public class Course {
     private String courseName;
@@ -60,11 +59,6 @@ public class Course {
         } else {
             return "Course Name: " + courseName;
         }
-    }
-
-    public static void printCourseLevels() {
-        System.out.println("\nAvailable Course Levels:");
-        UniversityUtils.getCourseLevels.get().forEach(level -> System.out.println(level.getLevelDescription()));
     }
 
     @Override

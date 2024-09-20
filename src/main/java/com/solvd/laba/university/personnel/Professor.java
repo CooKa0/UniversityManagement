@@ -4,10 +4,10 @@ import com.solvd.laba.university.interfaces.Manageable;
 import com.solvd.laba.university.management.Course;
 import com.solvd.laba.university.management.Department;
 import com.solvd.laba.university.enums.ProfessorLevel;
-import com.solvd.laba.university.utils.UniversityUtils;
+
 
 import java.time.LocalDate;
-import java.util.Arrays;
+
 
 public class Professor extends UniversityMember implements Manageable {
     private Department department;
@@ -46,10 +46,6 @@ public class Professor extends UniversityMember implements Manageable {
         }
     }
 
-    public static void printProfessorLevels() {
-        System.out.println("\nAvailable Professor Levels:");
-        Arrays.stream(ProfessorLevel.values()).forEach(UniversityUtils.printProfessorLevelDetails);
-    }
 
     public void addCourse(Course course) {
         department.addCourse(course);
