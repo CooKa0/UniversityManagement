@@ -172,11 +172,9 @@ public class UniversityApp {
             library1.addBook(book2);
 
             // Check if genres are academic
-            for (BookGenre genre : BookGenre.values()) {
-                if (UniversityUtils.isAcademicGenre.test(genre)) {
-                    System.out.println(genre.getGenreDescription() + " is an academic genre.");
-                }
-            }
+            Arrays.stream(BookGenre.values())
+                    .filter(UniversityUtils.isAcademicGenre)
+                    .forEach(genre -> System.out.println(genre.getGenreDescription() + " is an academic genre."));
 
 
             // Create an assignment and an exam
@@ -195,16 +193,14 @@ public class UniversityApp {
 
             // Print assignment and exam details
             System.out.println("\nAssignments:");
-            for (Assignment a : student.getAssignmentsList()) {
-                double score = a.getScore();
-                System.out.println(a.getAssignmentDetails() + " - Score: " + score);
-            }
+            student.getAssignmentsList().stream()
+                    .map(a -> a.getAssignmentDetails() + " - Score: " + a.getScore())
+                    .forEach(System.out::println);
 
             System.out.println("\nExams:");
-            for (Exam e : student.getExamsList()) {
-                double score = e.getScore();
-                System.out.println(e.getExamDetails(true) + " - Score: " + score);
-            }
+            student.getExamsList().stream()
+                    .map(e -> e.getExamDetails(true) + " - Score: " + e.getScore())
+                    .forEach(System.out::println);
 
             // Print student ID
             System.out.println("\nStudent ID:");
@@ -226,13 +222,13 @@ public class UniversityApp {
             university.addWorker(librarian);
             university.addWorker(securityGuard);
 
-            // Display worker IDs and details
-            System.out.println("\nWorker Details:");
-            for (Worker worker : university.getWorkers()) {
-                System.out.println(worker.getDetails());
-                System.out.println("Worker ID: " + worker.getId());
-                System.out.println("Monthly Salary: " + worker.calculateSalary());
-            }
+//            // Display worker IDs and details
+//            System.out.println("\nWorker Details:");
+//            for (Worker worker : university.getWorkers()) {
+//                System.out.println(worker.getDetails());
+//                System.out.println("Worker ID: " + worker.getId());
+//                System.out.println("Monthly Salary: " + worker.calculateSalary());
+//            }
 
             // Calculate and display average salary
             double averageSalary = UniversityUtils.calculateAverageSalary.apply(university.getWorkers());
@@ -249,10 +245,8 @@ public class UniversityApp {
             // Display events in the department
             System.out.println("\nEvents in the Department:");
             CustomLinkedList<Events> eventsList = csDepartment.getEvents();
-            for (int i = 0; i < eventsList.size(); i++) {
-                Events event = eventsList.get(i);
-                System.out.println(event);
-            }
+            eventsList.stream()
+                    .forEach(event -> System.out.println(event));
 
             System.out.println("\nTotal Events in the Department: " + csDepartment.getEventCount());
             System.out.println("Are there any events? " + (csDepartment.areEventsEmpty() ? "No" : "Yes"));
@@ -280,20 +274,16 @@ public class UniversityApp {
 
             // Display updated events in the department after worker operations
             System.out.println("\nUpdated Events in the Department:");
-                for (int i = 0; i < eventsList.size(); i++) {
-                    Events event = eventsList.get(i);
-                    System.out.println(event);
-            }
+            eventsList.stream()
+                    .forEach(event -> System.out.println(event));
 
             // Remove an event from the department
                 int indexToRemove = 1;
                 csDepartment.removeEvent(indexToRemove);
 
             System.out.println("\nEvents in the Department After Removal:");
-                for (int i = 0; i < eventsList.size(); i++) {
-                    Events event = eventsList.get(i);
-                    System.out.println(event);
-            }
+            eventsList.stream()
+                    .forEach(event -> System.out.println(event));
 
             // Display and update assignment details
             System.out.println("\nAssignment Details:");
@@ -345,17 +335,17 @@ public class UniversityApp {
             List<Classroom> classroomList = Arrays.asList(university.getClassrooms());
             List<Classroom> filteredClassrooms = UniversityUtils.filterByCapacity(30).apply(classroomList);
             System.out.println("\nFiltered Classrooms (Capacity <= 30):");
-            for (Classroom cls : filteredClassrooms) {
-                System.out.println(cls.getClassroomInfo());
-            }
+            filteredClassrooms.stream()
+                    .forEach(cls -> System.out.println(cls.getClassroomInfo()));
 
             // Display library information
             System.out.println("\nLibraries:");
-            for (Library lib : university.getLibraries()) {
-                System.out.println("Library Name: " + lib.getLibraryName());
-                System.out.println("Number of Books: " + lib.getBookCount());
-                System.out.println("Library Info: " + lib.getLibraryInfo());
-            }
+            Arrays.stream(university.getLibraries())
+                    .forEach(lib -> {
+                        System.out.println("Library Name: " + lib.getLibraryName());
+                        System.out.println("Number of Books: " + lib.getBookCount());
+                        System.out.println("Library Info: " + lib.getLibraryInfo());
+                    });
 
             // Update library names
             library1.setLibraryName("Updated Main Library");
