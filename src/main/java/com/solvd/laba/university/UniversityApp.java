@@ -15,6 +15,7 @@ import org.apache.logging.log4j.LogManager;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -127,22 +128,26 @@ public class UniversityApp {
             UniversityUtils.printProfessorLevelDetails.accept(ProfessorLevel.ASSISTANT);
 
             // Create professor
-            Professor professor = new Professor("Dr. Smith", LocalDate.of(2020, 5, 10), csDepartment, ProfessorLevel.FULL);
+            Professor professor = new Professor("Dr. Smith", LocalDate.of(2020, 5, 10), ProfessorLevel.FULL);
             try {
                 csDepartment.addProfessor(professor);
             } catch (ProfessorLimitExceededException e) {
                 System.err.println(e.getMessage());
             }
 
+            // Get the list of courses from the department
+            List<Course> departmentCourses = new ArrayList<>(csDepartment.getCourses().values());
+
             // Initialize managed courses for the professor
             Course courseToManage = csDepartment.findCourseByName("Java Programming");
             if (courseToManage != null) {
-                professor.addCourse(courseToManage);
+                professor.addCourse(courseToManage, departmentCourses);
             }
+
 
             // Demonstrate professor managing courses
             System.out.println("\nCourses managed by the Professor:");
-            professor.listCourses();
+            professor.listCourses(departmentCourses);
 
             // Display professor management details
             System.out.println("\nProfessor Management Details:");
@@ -599,15 +604,13 @@ public class UniversityApp {
             System.out.println("Reflection on Professor class:");
             ReflectionUtil.printClassInfo(Professor.class);
 
-            // Assuming you have a Department instance
-            Department departmentInstance = new Department("Computer Science");
 
             //Creating an instance of Professor using reflection
             System.out.println("\nCreating an instance of Professor:");
             Object professorInstance = ReflectionUtil.createInstance(
                     Professor.class,
-                    new Class[]{String.class, LocalDate.class, Department.class, ProfessorLevel.class},
-                    "John Doe", LocalDate.now(), departmentInstance, ProfessorLevel.ASSISTANT
+                    new Class[]{String.class, LocalDate.class, ProfessorLevel.class},
+                    "John Doe", LocalDate.now(), ProfessorLevel.ASSISTANT
             );
             System.out.println("Instance created: " + professorInstance);
 

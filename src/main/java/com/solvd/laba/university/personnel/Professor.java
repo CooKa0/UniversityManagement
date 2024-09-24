@@ -2,21 +2,16 @@ package com.solvd.laba.university.personnel;
 
 import com.solvd.laba.university.interfaces.Manageable;
 import com.solvd.laba.university.management.Course;
-import com.solvd.laba.university.management.Department;
 import com.solvd.laba.university.enums.ProfessorLevel;
 
-
 import java.time.LocalDate;
-import java.util.stream.Collectors;
-
+import java.util.List;
 
 public class Professor extends UniversityMember implements Manageable {
-    private Department department;
     private ProfessorLevel level;
 
-    public Professor(String name, LocalDate hireDate, Department department, ProfessorLevel level) {
+    public Professor(String name, LocalDate hireDate, ProfessorLevel level) {
         super(name, hireDate);
-        this.department = department;
         this.level = level;
     }
 
@@ -32,9 +27,7 @@ public class Professor extends UniversityMember implements Manageable {
 
     @Override
     public String getManagementDetails() {
-        return department.getCourses().values().stream()
-                .map(course -> course.getCourseDetails(true))
-                .collect(Collectors.joining("\n", "Managed Courses:\n", ""));
+        return "Managed Courses:\n" + "Professor is assigned courses through department management.";
     }
 
     public String getProfessorDetails(boolean includeHireDate) {
@@ -45,20 +38,19 @@ public class Professor extends UniversityMember implements Manageable {
         }
     }
 
-
-    public void addCourse(Course course) {
-        department.addCourse(course);
+    public void addCourse(Course course, List<Course> departmentCourses) {
+        departmentCourses.add(course);
         System.out.println("Course " + course.getCourseName() + " added by " + name);
     }
 
-    public void removeCourse(String courseName) {
-        department.getCourses().remove(courseName);
+    public void removeCourse(String courseName, List<Course> departmentCourses) {
+        departmentCourses.removeIf(course -> course.getCourseName().equals(courseName));
         System.out.println("Course " + courseName + " removed by " + name);
     }
 
-    public void listCourses() {
-        System.out.println("Courses in " + department.getDepartmentName() + ":");
-        System.out.println(department.listCourses());
+    public void listCourses(List<Course> departmentCourses) {
+        System.out.println("Courses:");
+        departmentCourses.forEach(course -> System.out.println(course.getCourseName()));
     }
 
     @Override
