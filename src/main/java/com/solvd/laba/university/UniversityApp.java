@@ -327,9 +327,8 @@ public class UniversityApp {
             System.out.println("Updated Capacity: " + classroom.getCapacity());
 
             System.out.println("\nClassrooms:");
-            for (Classroom cls : university.getClassrooms()) {
-                System.out.println(cls.getClassroomInfo());
-            }
+            Arrays.stream(university.getClassrooms())
+                    .forEach(cls -> System.out.println(cls.getClassroomInfo()));
 
             // Filter classrooms based on capacity
             List<Classroom> classroomList = Arrays.asList(university.getClassrooms());
@@ -396,18 +395,16 @@ public class UniversityApp {
 
             // Display all libraries
             System.out.println("\nLibraries:");
-            for (Library lib : university.getLibraries()) {
-                System.out.println(lib.getLibraryInfo());
-            }
+            Arrays.stream(university.getLibraries())
+                    .forEach(lib -> System.out.println(lib.getLibraryInfo()));
 
             // Display department information
             System.out.println("\nDepartment Information:");
             System.out.println("Department Name: " + csDepartment.getDepartmentName());
 
             System.out.println("Courses with Credits:");
-            for (Course course : csDepartment.getCourses().values()) {
-                System.out.println(course.getCourseName() + " - Credits: " + course.getCredits());
-            }
+            csDepartment.getCourses().values().stream()
+                    .forEach(course -> System.out.println(course.getCourseName() + " - Credits: " + course.getCredits()));
 
             System.out.println("\nCourses (Basic):");
             System.out.println(csDepartment.listCourses());
