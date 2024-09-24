@@ -1,5 +1,7 @@
 package com.solvd.laba.university.enums;
 
+import java.util.Arrays;
+
 public enum CourseLevel {
     UNDERGRADUATE("Undergraduate"),
     GRADUATE("Graduate"),
@@ -18,8 +20,8 @@ public enum CourseLevel {
 
     static {
         System.out.println("Available Course Levels:");
-        for (CourseLevel level : values()) {
-            System.out.println(level.getLevelDescription());
-        }
+        Arrays.stream(CourseLevel.values())
+                .map(CourseLevel::getLevelDescription)
+                .forEach(System.out::println);
     }
 }

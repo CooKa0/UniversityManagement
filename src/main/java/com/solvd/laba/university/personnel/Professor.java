@@ -7,6 +7,7 @@ import com.solvd.laba.university.enums.ProfessorLevel;
 
 
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 
 public class Professor extends UniversityMember implements Manageable {
@@ -31,11 +32,9 @@ public class Professor extends UniversityMember implements Manageable {
 
     @Override
     public String getManagementDetails() {
-        StringBuilder details = new StringBuilder("Managed Courses:\n");
-        for (Course course : department.getCourses().values()) {
-            details.append(course.getCourseDetails(true)).append("\n");
-        }
-        return details.toString();
+        return department.getCourses().values().stream()
+                .map(course -> course.getCourseDetails(true))
+                .collect(Collectors.joining("\n", "Managed Courses:\n", ""));
     }
 
     public String getProfessorDetails(boolean includeHireDate) {

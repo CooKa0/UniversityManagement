@@ -1,5 +1,7 @@
 package com.solvd.laba.university.enums;
 
+import java.util.Arrays;
+
 public enum ProfessorLevel {
     ASSISTANT("Assistant Professor", "Entry-level position for new faculty members."),
     ASSOCIATE("Associate Professor", "Mid-level position typically requiring tenure."),
@@ -28,8 +30,8 @@ public enum ProfessorLevel {
 
     static {
         System.out.println("Available Professor Levels:");
-        for (ProfessorLevel level : values()) {
-            System.out.println(level.getDetails());
+        Arrays.stream(values())
+                .map(ProfessorLevel::getDetails)
+                .forEach(System.out::println);
         }
     }
-}

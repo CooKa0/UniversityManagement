@@ -1,5 +1,7 @@
 package com.solvd.laba.university.enums;
 
+import java.util.Arrays;
+
 public enum Currency {
     PLN(1.0),
     USD(4.0),
@@ -21,8 +23,8 @@ public enum Currency {
 
     static {
         System.out.println("Supported Currencies:");
-        for (Currency currency : values()) {
-            System.out.println(currency.name() + ": " + currency.getConversionRate());
-        }
+        Arrays.stream(Currency.values())
+                .map(currency -> currency.name() + ": " + currency.getConversionRate())
+                .forEach(System.out::println);
     }
 }

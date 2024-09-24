@@ -108,20 +108,18 @@ public class Worker extends UniversityMember implements EventOrganizable, Identi
     public void organizeEvent() {
         List<Events> events = getOrCreateEvents();
         System.out.println("Organizing all events...");
-        for (Events event : events) {
-            event.setStatus("Organized");
-            System.out.println(event);
-        }
+        events.stream()
+                .peek(event -> event.setStatus("Organized"))
+                .forEach(System.out::println);
     }
 
     @Override
     public void cancelEvent() {
         List<Events> events = getOrCreateEvents();
         System.out.println("Canceling all events...");
-        for (Events event : events) {
-            event.setStatus("Canceled");
-            System.out.println(event);
-        }
+        events.stream()
+                .peek(event -> event.setStatus("Canceled"))
+                .forEach(System.out::println);
     }
 
     @Override

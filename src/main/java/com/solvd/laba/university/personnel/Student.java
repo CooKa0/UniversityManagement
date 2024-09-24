@@ -69,31 +69,19 @@ public class Student extends UniversityMember implements Evaluatable, Trackable,
     }
 
     public double calculateGPA() {
-        if (registeredCourses.isEmpty()) return 0.0;
-
-        double totalPoints = 0;
-        int totalCredits = 0;
-
-        for (Course course : registeredCourses) {
-            double grade = course.getGrade();
-            int credits = course.getCredits();
-
-            totalPoints += grade * credits;
-            totalCredits += credits;
-        }
-
-        return totalCredits == 0 ? 0.0 : totalPoints / totalCredits;
+        return registeredCourses.stream()
+                .mapToDouble(course -> course.getGrade() * course.getCredits())
+                .average().orElse(0.0);
     }
 
     public void addCourseGrade(Course course, double grade) {
-        for (Course c : registeredCourses) {
-            if (c.equals(course)) {
-                c.setGrade(grade);
-                return;
-            }
-        }
-        course.setGrade(grade);
-        registeredCourses.add(course);
+        registeredCourses.stream()
+                .filter(c -> c.equals(course))
+                .findFirst()
+                .ifPresentOrElse(c -> c.setGrade(grade), () -> {
+                    course.setGrade(grade);
+                    registeredCourses.add(course);
+                });
     }
 
     public void addAssignment(Assignment assignment, double score) {
@@ -115,13 +103,10 @@ public class Student extends UniversityMember implements Evaluatable, Trackable,
     }
 
     public String registerForCourse(Course course) {
-        List<Course> courses = getRegisteredCourses();
-        for (Course rc : courses) {
-            if (rc.equals(course)) {
-                return "Already registered for " + course.getCourseName();
-            }
+        if (getRegisteredCourses().stream().anyMatch(rc -> rc.equals(course))) {
+            return "Already registered for " + course.getCourseName();
         }
-        courses.add(course);
+        getRegisteredCourses().add(course);
         return "Successfully registered for " + course.getCourseName();
     }
 

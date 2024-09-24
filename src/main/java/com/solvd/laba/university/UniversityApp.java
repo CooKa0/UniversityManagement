@@ -7,6 +7,7 @@ import com.solvd.laba.university.personnel.*;
 import com.solvd.laba.university.facilities.*;
 import com.solvd.laba.university.assessment.*;
 import com.solvd.laba.university.utils.CustomLinkedList;
+import com.solvd.laba.university.utils.ReflectionUtil;
 import com.solvd.laba.university.utils.UniversityUtils;
 import com.solvd.laba.university.utils.FileUtil;
 import org.apache.logging.log4j.Logger;
@@ -102,9 +103,8 @@ public class UniversityApp {
 
             // Display registered courses
             System.out.println("\nRegistered Courses:");
-                for (Course course : student.getRegisteredCoursesList()) {
-                    System.out.println(course.getCourseName() + " - Status: Registered");
-                }
+            student.getRegisteredCoursesList().stream()
+                    .forEach(course -> System.out.println(course.getCourseName() + " - Status: Registered"));
 
             // Add grades and calculate GPA
             student.addCourseGrade(javaCourse, 3.7);
@@ -594,6 +594,26 @@ public class UniversityApp {
             } catch (Exception e) {
                 logger.error("Failed to read student information from file.", e);
             }
+
+            //Extracting information about the Professor class
+            System.out.println("Reflection on Professor class:");
+            ReflectionUtil.printClassInfo(Professor.class);
+
+            // Assuming you have a Department instance
+            Department departmentInstance = new Department("Computer Science");
+
+            //Creating an instance of Professor using reflection
+            System.out.println("\nCreating an instance of Professor:");
+            Object professorInstance = ReflectionUtil.createInstance(
+                    Professor.class,
+                    new Class[]{String.class, LocalDate.class, Department.class, ProfessorLevel.class},
+                    "John Doe", LocalDate.now(), departmentInstance, ProfessorLevel.ASSISTANT
+            );
+            System.out.println("Instance created: " + professorInstance);
+
+            //Calling a method on the Professor instance using reflection
+            Object result = ReflectionUtil.callMethod(professorInstance, "getProfessorDetails", new Class[]{boolean.class}, true);
+            System.out.println("Method result: " + result);
 
         } catch (Exception e) {
             logger.error("Error: ", e);

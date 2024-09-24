@@ -1,5 +1,7 @@
 package com.solvd.laba.university.enums;
 
+import java.util.Arrays;
+
 public enum WorkerRole {
     ADMINISTRATIVE("Administrative staff, handling office tasks."),
     ACADEMIC("Academic staff, involved in teaching and research."),
@@ -24,8 +26,8 @@ public enum WorkerRole {
 
     static {
         System.out.println("\nAvailable Worker Roles:");
-        for (WorkerRole role : WorkerRole.values()) {
-            System.out.println(role.getRoleDetails());
-        }
+        Arrays.stream(WorkerRole.values())
+                .map(WorkerRole::getRoleDetails)
+                .forEach(System.out::println);
     }
 }

@@ -6,6 +6,8 @@ import com.solvd.laba.university.enums.BookGenre;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Library {
     private String libraryName;
@@ -24,11 +26,12 @@ public class Library {
         }
 
         if (initialBookCount > 0) {
-            this.booksList = new ArrayList<>();
-            for (int i = 0; i < initialBookCount; i++) {
-                BookGenre genre = BookGenre.values()[i % BookGenre.values().length];
-                booksList.add(new Books("Book" + (i + 1), "Author" + (i + 1), 2020 + (i % 5), genre));
-            }
+            this.booksList = IntStream.range(0, initialBookCount)
+                    .mapToObj(i -> {
+                        BookGenre genre = BookGenre.values()[i % BookGenre.values().length];
+                        return new Books("Book" + (i + 1), "Author" + (i + 1), 2020 + (i % 5), genre);
+                    })
+                    .collect(Collectors.toList());
         }
         totalBooksAcrossAllLibraries += initialBookCount;
     }

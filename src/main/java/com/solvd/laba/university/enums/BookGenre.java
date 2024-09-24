@@ -1,5 +1,7 @@
 package com.solvd.laba.university.enums;
 
+import java.util.Arrays;
+
 public enum BookGenre {
     TEXTBOOK("Textbook"),
     RESEARCH("Research"),
@@ -25,8 +27,8 @@ public enum BookGenre {
 
     static {
         System.out.println("Available Book Genres:");
-        for (BookGenre genre : values()) {
-            System.out.println(genre.getGenreDescription());
+        Arrays.stream(BookGenre.values())
+                .map(BookGenre::getGenreDescription)
+                .forEach(System.out::println);
         }
     }
-}

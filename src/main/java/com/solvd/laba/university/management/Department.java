@@ -1,6 +1,7 @@
 package com.solvd.laba.university.management;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.solvd.laba.university.exceptions.CourseNotFoundException;
 import com.solvd.laba.university.exceptions.EventConflictException;
@@ -76,11 +77,11 @@ public class Department {
     }
 
     public void addEvent(Events newEvent) throws EventConflictException {
-        Events[] eventsArray = getEvents().toArray(new Events[0]);
-        for (Events event : eventsArray) {
-            if (event != null && event.conflictsWith(newEvent)) {
-                throw new EventConflictException("Event conflicts with existing event: " + event.getName());
-            }
+        boolean hasConflict = getEvents().stream()
+                .filter(Objects::nonNull)
+                .anyMatch(event -> event.conflictsWith(newEvent));
+        if (hasConflict) {
+            throw new EventConflictException("Event conflicts with existing event");
         }
         getEvents().add(newEvent);
     }
@@ -92,25 +93,16 @@ public class Department {
     }
 
     public String listCourses() {
-        StringBuilder courseList = new StringBuilder();
-        for (Course course : getCourses().values()) {
-            courseList.append(course.getCourseName()).append("\n");
-        }
-        return courseList.toString();
+        return getCourses().values().stream()
+                .map(Course::getCourseName)
+                .collect(Collectors.joining("\n"));
     }
 
     public String listCourses(boolean detailed) {
-        StringBuilder courseList = new StringBuilder();
-        for (Course course : getCourses().values()) {
-            if (detailed) {
-                courseList.append("Course Name: ").append(course.getCourseName())
-                        .append(", Credits: ").append(course.getCredits())
-                        .append("\n");
-            } else {
-                courseList.append(course.getCourseName()).append("\n");
-            }
-        }
-        return courseList.toString();
+        return getCourses().values().stream()
+                .map(course -> detailed ? "Course Name: " + course.getCourseName() + ", Credits: " + course.getCredits()
+                        : course.getCourseName())
+                .collect(Collectors.joining("\n"));
     }
 
     public Course findCourseByName(String courseName) throws CourseNotFoundException {
