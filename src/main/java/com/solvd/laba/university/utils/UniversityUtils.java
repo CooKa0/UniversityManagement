@@ -20,6 +20,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class UniversityUtils {
 
@@ -89,7 +90,11 @@ public class UniversityUtils {
         }
 
         // Predicate to check if a genre is academic
-        public static Predicate<BookGenre> isAcademicGenre = genre -> genre.isAcademic();
+        public static List<BookGenre> filterGenres(List<BookGenre> genres, Predicate<BookGenre> condition) {
+            return genres.stream()
+                    .filter(condition)
+                    .collect(Collectors.toList());
+        }
 
         // Lambda for calculating average salary
         public static Function<Worker[], Double> calculateAverageSalary = workers -> {

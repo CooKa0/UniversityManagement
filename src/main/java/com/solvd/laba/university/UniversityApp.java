@@ -6,12 +6,15 @@ import com.solvd.laba.university.management.*;
 import com.solvd.laba.university.personnel.*;
 import com.solvd.laba.university.facilities.*;
 import com.solvd.laba.university.assessment.*;
+import com.solvd.laba.university.threads.ConnectionLoaderRunnable;
+import com.solvd.laba.university.threads.ConnectionLoaderThread;
 import com.solvd.laba.university.utils.CustomLinkedList;
 import com.solvd.laba.university.utils.ReflectionUtil;
 import com.solvd.laba.university.utils.UniversityUtils;
 import com.solvd.laba.university.utils.FileUtil;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import com.solvd.laba.university.threads.ConnectionPool;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -19,6 +22,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 
 import static com.solvd.laba.university.enums.WorkerRole.*;
 
@@ -29,6 +35,7 @@ public class UniversityApp {
 
 
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
 
         // Define file paths
@@ -36,8 +43,48 @@ public class UniversityApp {
         String universityInfoFile = outputDir + "university_info.txt";
         String studentsInfoFile = outputDir + "students_info.txt";
 
+        // Initialize the connection pool
+        ConnectionPool pool = ConnectionPool.getInstance();
+
+        // List to hold threads
+        List<Thread> threads = new ArrayList<>();
+
+
 
         try {
+
+            // Start 5 threads using ConnectionLoaderRunnable
+            List<Thread> runnableThreads = IntStream.range(0, 5)
+                    .mapToObj(i -> {
+                        Thread thread = new Thread(new ConnectionLoaderRunnable(pool));
+                        thread.start();
+                        logger.info("Started ConnectionLoaderRunnable thread {}", i + 1);
+                        return thread;
+                    })
+                    .collect(Collectors.toList());
+            threads.addAll(runnableThreads);
+
+            // Start 2 additional threads using ConnectionLoaderThread
+            List<Thread> threadThreads = IntStream.range(0, 2)
+                    .mapToObj(i -> {
+                        Thread thread = new Thread(new ConnectionLoaderThread(pool));
+                        thread.start();
+                        logger.info("Started ConnectionLoaderThread {}", i + 1);
+                        return thread;
+                    })
+                    .collect(Collectors.toList());
+            threads.addAll(threadThreads);
+
+            // Wait for all threads to finish
+            threads.forEach(thread -> {
+                try {
+                    thread.join();
+                    logger.info("Thread {} finished", thread.getName());
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    logger.error("Thread interrupted: {}", thread.getName(), e);
+                }
+            });
 
             // Prompt the user to enter the university name
             System.out.print("Enter the name of the university: ");
@@ -171,10 +218,14 @@ public class UniversityApp {
             library1.addBook(book1);
             library1.addBook(book2);
 
-            // Check if genres are academic
-            Arrays.stream(BookGenre.values())
-                    .filter(UniversityUtils.isAcademicGenre)
-                    .forEach(genre -> System.out.println(genre.getGenreDescription() + " is an academic genre."));
+            // List book genres
+            List<BookGenre> genres = List.of(BookGenre.values());
+
+            // Using the filterGenres method to filter for academic genres
+            List<BookGenre> academicGenres = UniversityUtils.filterGenres(genres, BookGenre::isAcademic);
+
+            System.out.println("Academic Genres:");
+            academicGenres.forEach(genre -> System.out.println(genre.getGenreDescription()));
 
 
             // Create an assignment and an exam
@@ -222,13 +273,13 @@ public class UniversityApp {
             university.addWorker(librarian);
             university.addWorker(securityGuard);
 
-//            // Display worker IDs and details
-//            System.out.println("\nWorker Details:");
-//            for (Worker worker : university.getWorkers()) {
-//                System.out.println(worker.getDetails());
-//                System.out.println("Worker ID: " + worker.getId());
-//                System.out.println("Monthly Salary: " + worker.calculateSalary());
-//            }
+            // Display worker IDs and details
+            System.out.println("\nWorker Details:");
+            Arrays.stream(university.getWorkers()).forEach(worker -> {
+                System.out.println(worker.getDetails());
+                System.out.println("Worker ID: " + worker.getId());
+                System.out.println("Monthly Salary: " + worker.calculateSalary());
+            });
 
             // Calculate and display average salary
             double averageSalary = UniversityUtils.calculateAverageSalary.apply(university.getWorkers());
@@ -369,16 +420,6 @@ public class UniversityApp {
             System.out.println(library1.getLibraryInfo());
             System.out.println(library2.getLibraryInfo());
 
-
-    //        // List all books in each library
-    //        System.out.println("\nBooks in Libraries:");
-    //        for (Library lib : university.getLibraries()) {
-    //            System.out.println("\nLibrary: " + lib.getLibraryName());
-    //            for (Books book : lib.getBooksList()) {
-    //                System.out.println(book.getBookDetails());
-    //            }
-    //        }
-
             // Check Availability
             if (newBook.isAvailable()) {
                 System.out.println("The book is available for checkout.");
@@ -431,14 +472,12 @@ public class UniversityApp {
 
             // Display departments and their courses
             System.out.println("\nDepartments:");
-
-            for (Department dept : university.getDepartments()) {
+            Arrays.stream(university.getDepartments()).forEach(dept -> {
                 System.out.println("Department Name: " + dept.getDepartmentName());
                 System.out.println("Courses:");
+                dept.getCourses().values().stream()
+                        .forEach(course -> System.out.println(" - " + course.getCourseName() + " - Credits: " + course.getCredits()));
 
-            for (Course course : dept.getCourses().values()) {
-                System.out.println(course.getCourseName() + " - Credits: " + course.getCredits());
-            }
 
             // Display and update professor details
             System.out.println("\nProfessor Details:");
@@ -455,10 +494,13 @@ public class UniversityApp {
             System.out.println("Updated Professor Name: " + professor.getName());
             System.out.println("Updated Hire Date: " + professor.getHireDate());
 
-            System.out.println("Professors:");
-            for (Professor prof : dept.getProfessors()) {
-                System.out.println(prof.getProfessorDetails(true));
-            }
+            // Display Professors for each department here
+                System.out.println("Professors:");
+                dept.getProfessors().forEach(prof ->
+                        System.out.println(prof.getProfessorDetails(true))
+                );
+            });
+
             // Override methods demonstration
             System.out.println("\nToString Override:");
             System.out.println(professor);
@@ -476,9 +518,9 @@ public class UniversityApp {
             System.out.println("Updated Enrollment Date: " + student.getEnrollmentDate());
 
             System.out.println("\nAll Students:");
-            for (Student s : university.getStudents()) {
-                System.out.println(s.getDetails());
-            }
+            Arrays.stream(university.getStudents())
+                    .map(Student::getDetails)
+                    .forEach(System.out::println);
 
 
             // Display and update course details
@@ -500,9 +542,9 @@ public class UniversityApp {
 
             // Print details of each worker
             System.out.println("\nWorker Details:");
-            for (Worker worker : university.getWorkers()) {
-                System.out.println(worker.getDetails());
-            }
+            Arrays.stream(university.getWorkers())
+                    .map(Worker::getDetails)
+                    .forEach(System.out::println);
 
             // Update and display worker details
             System.out.println("\nUpdating Worker Details:");
@@ -524,22 +566,21 @@ public class UniversityApp {
             System.out.println("\nComparing Two Workers:");
             UniversityUtils.compareMembers(janitor, librarian);
 
-            }
-
-
             // Write university information to file
             StringBuilder universityInfoBuilder = new StringBuilder();
             universityInfoBuilder.append("University Name: ").append(university.getName()).append("\n");
             universityInfoBuilder.append("Established Date: ").append(university.getEstablishedDate()).append("\n");
             universityInfoBuilder.append("Departments:\n");
 
-            for (Department dept : university.getDepartments()) {
-                universityInfoBuilder.append("  Department Name: ").append(dept.getDepartmentName()).append("\n");
-                universityInfoBuilder.append("  Courses:\n");
-                for (Course course : dept.getCourses().values()) {
-                    universityInfoBuilder.append("    ").append(course.getCourseName()).append(" - Credits: ").append(course.getCredits()).append("\n");
-                }
-            }
+            Arrays.stream(university.getDepartments())
+                    .forEach(dept -> {
+                        universityInfoBuilder.append("  Department Name: ").append(dept.getDepartmentName()).append("\n");
+                        universityInfoBuilder.append("  Courses:\n");
+                        Arrays.stream(dept.getCourses().values().toArray(new Course[0]))
+                                .forEach(course ->
+                                        universityInfoBuilder.append("    ").append(course.getCourseName()).append(" - Credits: ").append(course.getCredits()).append("\n")
+                                );
+                    });
 
             try {
                 FileUtil.writeFile(universityInfoFile, universityInfoBuilder.toString());
@@ -547,18 +588,11 @@ public class UniversityApp {
                 logger.error("Failed to write university information to file: {}", universityInfoFile, e);
             }
 
-                try {
-                    FileUtil.writeFile(universityInfoFile, universityInfoBuilder.toString());
-                } catch (Exception e) {
-                    logger.error("Failed to write university information to file: {}", universityInfoFile, e);
-                }
-
             // Write student information to file
             StringBuilder studentsInfoBuilder = new StringBuilder();
             studentsInfoBuilder.append("Students:\n");
-            for (Student s : university.getStudents()) {
-                studentsInfoBuilder.append(s.getDetails()).append("\n");
-            }
+            Arrays.stream(university.getStudents())
+                    .forEach(s -> studentsInfoBuilder.append(s.getDetails()).append("\n"));
 
             try {
                 FileUtil.writeFile(studentsInfoFile, studentsInfoBuilder.toString());

@@ -165,22 +165,24 @@ public class Student extends UniversityMember implements Evaluatable, Trackable,
             report.append("No courses registered.\n");
         } else {
             report.append("Registered Courses:\n");
-            for (Course course : getRegisteredCourses()) {
-                report.append(course.getCourseDetails()).append("\n");
-            }
+            getRegisteredCourses().stream()
+                    .map(Course::getCourseDetails)
+                    .forEach(details -> report.append(details).append("\n"));
         }
+
 
         if (getAssignments().isEmpty() && getExams().isEmpty()) {
             report.append("No assignments or exams available.\n");
         } else {
             report.append("Assignments:\n");
-            for (Assignment assignment : getAssignments()) {
-                report.append(assignment.getAssignmentDetails()).append("\n");
-            }
+            getAssignments().stream()
+                    .map(Assignment::getAssignmentDetails)
+                    .forEach(details -> report.append(details).append("\n"));
+
             report.append("Exams:\n");
-            for (Exam exam : getExams()) {
-                report.append(exam.getExamDetails(true)).append("\n");
-            }
+            getExams().stream()
+                    .map(exam -> exam.getExamDetails(true))
+                    .forEach(details -> report.append(details).append("\n"));
         }
 
         this.progressReport = report.toString();

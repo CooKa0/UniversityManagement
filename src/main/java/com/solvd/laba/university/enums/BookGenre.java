@@ -1,6 +1,7 @@
 package com.solvd.laba.university.enums;
 
 import java.util.Arrays;
+import java.util.EnumSet;
 
 public enum BookGenre {
     TEXTBOOK("Textbook"),
@@ -13,6 +14,9 @@ public enum BookGenre {
 
     private final String genreDescription;
 
+    //define set for academic genres
+    private static final EnumSet<BookGenre> ACADEMIC_GENRES = EnumSet.of(TEXTBOOK, RESEARCH, JOURNAL, THESIS);
+
     BookGenre(String genreDescription) {
         this.genreDescription = genreDescription;
     }
@@ -22,7 +26,7 @@ public enum BookGenre {
     }
 
     public boolean isAcademic() {
-        return this == TEXTBOOK || this == RESEARCH || this == JOURNAL || this == THESIS;
+        return ACADEMIC_GENRES.contains(this);
     }
 
     static {
