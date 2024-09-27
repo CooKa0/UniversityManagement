@@ -89,7 +89,7 @@ public class UniversityUtils {
             return (date != null) ? date.format(dateFormatter) : "Unknown";
         }
 
-        // Predicate to check if a genre is academic
+        // Predicate to filter book genres
         public static List<BookGenre> filterGenres(List<BookGenre> genres, Predicate<BookGenre> condition) {
             return genres.stream()
                     .filter(condition)
