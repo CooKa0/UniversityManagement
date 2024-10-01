@@ -15,9 +15,13 @@ public class ConnectionPool {
                 .forEach(pool::add);
     }
 
-    public static synchronized ConnectionPool getInstance() {
+    public static ConnectionPool getInstance() {
         if (instance == null) {
-            instance = new ConnectionPool();
+            synchronized (ConnectionPool.class) {
+                if (instance == null) {
+                    instance = new ConnectionPool();
+                }
+            }
         }
         return instance;
     }
